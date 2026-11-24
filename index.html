@@ -618,7 +618,7 @@
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.2.0</span>
+          <span class="ios-cell-value">1.2.1</span>
         </div>
         <div class="ios-cell">
           <span>外部词库路径</span>
@@ -717,15 +717,18 @@
       ielts: './data/ielts.json'
     };
 
-    const loadedBooks = {}; // 内存缓存已加载的词库
-    const bookMeta = {};    // 记录来源（外部完整词库 / 内置示例）
+    const loadedBooks = {};
+    const bookMeta = {};
 
-    // 标准化词条格式（兼容常见开源 JSON 字段名）
+    // 兼容 KyleBing、qwerty-learner 及标准格式
     function normalizeEntry(raw) {
-      const word = (raw.word || raw.headWord || '').trim();
+      const word = (raw.word || raw.headWord || raw.name || '').trim();
       const phonetic = raw.phonetic || raw.usphone || raw.ukphone || '';
       const pos = raw.pos || (raw.translations && raw.translations[0]?.type) || '';
-      const meaning = raw.meaning || raw.trans || (raw.translations && raw.translations.map(t => t.translation).join('；')) || '暂无释义';
+      const meaning = raw.meaning
+        || (Array.isArray(raw.trans) ? raw.trans.join('；') : raw.trans)
+        || (raw.translations && raw.translations.map(t => t.translation).join('；'))
+        || '暂无释义';
       const example = raw.example || (raw.sentences && raw.sentences[0]?.sentence) || '';
       const exampleCn = raw.exampleCn || (raw.sentences && raw.sentences[0]?.translation) || '';
       return {
@@ -765,7 +768,7 @@
       bookIndices: JSON.parse(localStorage.getItem('vocab_indices') || '{"cet4":0,"cet6":0,"ielts":0}'),
       revealed: false,
       mastered: new Set(JSON.parse(localStorage.getItem('vocab_mastered_v2') || '[]')),
-      mistakes: JSON.parse(localStorage.getItem('vocab_mistakes') || '{}'), // { key: wordObj }
+      mistakes: JSON.parse(localStorage.getItem('vocab_mistakes') || '{}'),
       quiz: { word: null, options: [], selectedKey: null, correct: 0, wrong: 0 },
       spell: { word: null, submitted: false, isCorrect: false, userInput: '', showHint: false, correct: 0, wrong: 0 }
     };
