@@ -29,6 +29,7 @@
       --red: #FF3B30;
       --red-bg: rgba(255, 59, 48, 0.14);
       --orange: #FF9500;
+      --orange-bg: rgba(255, 149, 0, 0.15);
       --separator: rgba(60, 60, 67, 0.18);
       --safe-top: env(safe-area-inset-top, 0px);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
@@ -50,6 +51,7 @@
         --red: #FF453A;
         --red-bg: rgba(255, 69, 58, 0.18);
         --orange: #FF9F0A;
+        --orange-bg: rgba(255, 159, 10, 0.18);
         --separator: rgba(84, 84, 88, 0.45);
       }
     }
@@ -163,7 +165,7 @@
       background: var(--bg-card);
       border-radius: 12px;
       overflow: hidden;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .ios-cell {
@@ -212,7 +214,6 @@
     .ios-btn:active { opacity: 0.78; }
     .ios-btn.secondary { background: var(--bg-subtle); color: var(--text-primary); }
     .ios-btn.green { background: var(--green); color: #FFFFFF; }
-    .ios-btn.red-outline { background: var(--red-bg); color: var(--red); }
 
     /* 底部 Tab 栏 */
     .ios-tabbar {
@@ -260,7 +261,7 @@
 
     .tab-item.active { color: var(--accent); }
 
-    /* ================= 背单词全屏子页面 ================= */
+    /* ================= 全屏侧滑子页面通用 ================= */
     .sub-view {
       position: fixed;
       inset: 0;
@@ -310,6 +311,7 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
     }
 
+    /* ================= 模块 A：背单词样式 ================= */
     .book-status-bar {
       display: flex;
       justify-content: space-between;
@@ -320,7 +322,6 @@
       padding: 0 4px;
     }
 
-    /* 横向可滑动模式栏（适配 5 个模式） */
     .mode-pills {
       display: flex;
       gap: 8px;
@@ -347,10 +348,7 @@
       gap: 5px;
     }
 
-    .mode-pill.active {
-      background: var(--accent);
-      color: #FFFFFF;
-    }
+    .mode-pill.active { background: var(--accent); color: #FFFFFF; }
 
     .badge-dot {
       background: var(--red);
@@ -360,12 +358,8 @@
       border-radius: 10px;
       font-weight: 700;
     }
+    .mode-pill.active .badge-dot { background: rgba(255, 255, 255, 0.28); }
 
-    .mode-pill.active .badge-dot {
-      background: rgba(255, 255, 255, 0.28);
-    }
-
-    /* 单词卡片与测验 */
     .vocab-card {
       background: var(--bg-card);
       border-radius: 16px;
@@ -374,193 +368,197 @@
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
     }
 
-    .card-meta {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 14px;
-    }
-
-    .master-badge {
-      padding: 3px 8px;
-      border-radius: 10px;
-      font-size: 12px;
-      font-weight: 600;
-      background: var(--bg-subtle);
-      color: var(--text-secondary);
-    }
-
+    .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; }
+    .master-badge { padding: 3px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; background: var(--bg-subtle); color: var(--text-secondary); }
     .master-badge.done { background: var(--green-bg); color: var(--green); }
-
     .word-main { text-align: center; padding: 10px 0 16px; }
     .word-text { font-size: 30px; font-weight: 700; letter-spacing: -0.4px; margin-bottom: 8px; word-break: break-word; }
-
-    .phonetic-row {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--bg-subtle);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 15px;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
-
-    .speaker-icon {
-      width: 18px;
-      height: 18px;
-      stroke: var(--accent);
-      fill: none;
-      stroke-width: 2;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .reveal-box {
-      border-top: 0.5px solid var(--separator);
-      padding-top: 14px;
-      margin-top: 8px;
-    }
-
+    .phonetic-row { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-subtle); padding: 6px 14px; border-radius: 20px; font-size: 15px; color: var(--text-secondary); cursor: pointer; }
+    .speaker-icon { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .reveal-box { border-top: 0.5px solid var(--separator); padding-top: 14px; margin-top: 8px; }
     .meaning-text { font-size: 17px; font-weight: 600; margin-bottom: 12px; line-height: 1.4; }
-
-    .pos-tag {
-      display: inline-block;
-      font-size: 12px;
-      color: var(--accent);
-      background: rgba(0, 122, 255, 0.12);
-      padding: 2px 6px;
-      border-radius: 6px;
-      margin-right: 6px;
-      font-weight: 600;
-    }
-
+    .pos-tag { display: inline-block; font-size: 12px; color: var(--accent); background: rgba(0, 122, 255, 0.12); padding: 2px 6px; border-radius: 6px; margin-right: 6px; font-weight: 600; }
     .example-box { background: var(--bg-primary); border-radius: 12px; padding: 12px 14px; }
     .example-en-row { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; margin-bottom: 6px; }
     .example-en { font-size: 14px; line-height: 1.45; color: var(--text-primary); }
     .example-cn { font-size: 13px; color: var(--text-secondary); line-height: 1.4; }
-
     .icon-btn { background: none; border: none; padding: 4px; cursor: pointer; flex-shrink: 0; }
     .card-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
     .nav-arrows { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
-
-    /* 听力与拼写控件 */
-    .quiz-score {
-      display: flex;
-      justify-content: space-between;
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 12px;
-    }
-
-    .listen-btn {
-      width: 78px;
-      height: 78px;
-      border-radius: 39px;
-      border: none;
-      background: var(--accent);
-      color: #FFFFFF;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 8px auto 10px;
-      box-shadow: 0 6px 18px rgba(0, 122, 255, 0.3);
-      cursor: pointer;
-    }
+    .quiz-score { display: flex; justify-content: space-between; font-size: 13px; color: var(--text-secondary); margin-bottom: 12px; }
+    .listen-btn { width: 78px; height: 78px; border-radius: 39px; border: none; background: var(--accent); color: #FFFFFF; display: flex; align-items: center; justify-content: center; margin: 8px auto 10px; box-shadow: 0 6px 18px rgba(0, 122, 255, 0.3); cursor: pointer; }
     .listen-btn:active { transform: scale(0.94); }
     .listen-btn svg { width: 32px; height: 32px; stroke: #FFFFFF; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
     .speed-row { display: flex; justify-content: center; gap: 8px; margin-bottom: 8px; }
-    .speed-chip {
-      border: none;
-      background: var(--bg-subtle);
-      color: var(--text-secondary);
-      padding: 5px 12px;
-      border-radius: 14px;
-      font-size: 12px;
-      font-weight: 600;
-      cursor: pointer;
-    }
+    .speed-chip { border: none; background: var(--bg-subtle); color: var(--text-secondary); padding: 5px 12px; border-radius: 14px; font-size: 12px; font-weight: 600; cursor: pointer; }
     .speed-chip.active { background: var(--accent); color: #FFFFFF; }
-
     .quiz-options { display: flex; flex-direction: column; gap: 10px; margin-top: 12px; }
-    .option-btn {
-      width: 100%;
-      text-align: left;
-      padding: 13px 15px;
-      border-radius: 12px;
-      border: 1.5px solid transparent;
-      background: var(--bg-card);
-      color: var(--text-primary);
-      font-size: 15px;
-      line-height: 1.35;
-      cursor: pointer;
-    }
+    .option-btn { width: 100%; text-align: left; padding: 13px 15px; border-radius: 12px; border: 1.5px solid transparent; background: var(--bg-card); color: var(--text-primary); font-size: 15px; line-height: 1.35; cursor: pointer; }
     .option-btn.correct { background: var(--green-bg); border-color: var(--green); color: var(--green); font-weight: 600; }
     .option-btn.wrong { background: var(--red-bg); border-color: var(--red); color: var(--red); }
-
-    /* 听音拼写输入框 */
-    .spell-input {
-      width: 100%;
-      padding: 14px 16px;
-      font-size: 20px;
-      font-weight: 600;
-      text-align: center;
-      letter-spacing: 1px;
-      border-radius: 12px;
-      border: 1.5px solid var(--separator);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      outline: none;
-      margin: 12px 0;
-      user-select: text;
-      -webkit-user-select: text;
-    }
+    .spell-input { width: 100%; padding: 14px 16px; font-size: 20px; font-weight: 600; text-align: center; letter-spacing: 1px; border-radius: 12px; border: 1.5px solid var(--separator); background: var(--bg-primary); color: var(--text-primary); outline: none; margin: 12px 0; user-select: text; -webkit-user-select: text; }
     .spell-input:focus { border-color: var(--accent); }
     .spell-input.correct { border-color: var(--green); background: var(--green-bg); color: var(--green); }
     .spell-input.wrong { border-color: var(--red); background: var(--red-bg); color: var(--red); }
+    .quiz-reveal-card { margin-top: 12px; background: var(--bg-card); border-radius: 12px; padding: 14px 16px; }
+    .mistake-item { background: var(--bg-card); border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; }
+    .mistake-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .mistake-word { font-size: 18px; font-weight: 700; }
+    .mistake-actions { display: flex; align-items: center; gap: 10px; }
+    .remove-tag { border: none; background: var(--green-bg); color: var(--green); font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 10px; cursor: pointer; }
+    .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 
-    .quiz-reveal-card {
-      margin-top: 12px;
-      background: var(--bg-card);
+    /* ================= 模块 B：日常记账本样式 ================= */
+    .alert-banner {
+      background: var(--red-bg);
+      border: 1px solid rgba(255, 59, 48, 0.35);
+      color: var(--red);
       border-radius: 12px;
-      padding: 14px 16px;
+      padding: 11px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      line-height: 1.4;
     }
 
-    /* 错题本列表 */
-    .mistake-item {
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .stat-box {
       background: var(--bg-card);
       border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 10px;
+      padding: 12px 10px;
+      text-align: center;
     }
-    .mistake-top {
+
+    .stat-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
+    .stat-num { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+    .stat-num.over { color: var(--red); }
+    .stat-sub { font-size: 11px; color: var(--text-secondary); }
+
+    .progress-track {
+      height: 4px;
+      background: var(--bg-subtle);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-top: 6px;
+    }
+    .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.25s ease; }
+    .progress-fill.over { background: var(--red); }
+
+    .expense-form-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    .amount-input-wrap {
+      display: flex;
+      align-items: center;
+      border-bottom: 1px solid var(--separator);
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+    }
+
+    .currency-symbol {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-right: 8px;
+    }
+
+    .amount-input {
+      flex: 1;
+      border: none;
+      background: transparent;
+      font-size: 30px;
+      font-weight: 700;
+      color: var(--text-primary);
+      outline: none;
+      width: 100%;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .cat-chip {
+      border: 1px solid transparent;
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border-radius: 10px;
+      padding: 8px 4px;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .cat-chip.active {
+      background: rgba(0, 122, 255, 0.14);
+      border-color: var(--accent);
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .note-input {
+      width: 100%;
+      padding: 11px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--separator);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 15px;
+      outline: none;
+      margin-bottom: 12px;
+      user-select: text;
+      -webkit-user-select: text;
+    }
+    .note-input:focus { border-color: var(--accent); }
+
+    .record-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 6px;
+      padding: 12px 14px;
+      background: var(--bg-card);
+      border-radius: 12px;
+      margin-bottom: 8px;
     }
-    .mistake-word { font-size: 18px; font-weight: 700; }
-    .mistake-actions { display: flex; align-items: center; gap: 10px; }
-    .remove-tag {
-      border: none;
-      background: var(--green-bg);
-      color: var(--green);
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .empty-state {
-      text-align: center;
-      padding: 48px 20px;
+
+    .record-left { display: flex; flex-direction: column; gap: 3px; }
+    .record-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+    .record-cat-tag {
+      font-size: 11px;
+      padding: 2px 6px;
+      border-radius: 6px;
+      background: var(--bg-subtle);
       color: var(--text-secondary);
-      font-size: 15px;
-      line-height: 1.6;
+      font-weight: 600;
+    }
+    .record-time { font-size: 12px; color: var(--text-secondary); }
+    .record-right { display: flex; align-items: center; gap: 10px; }
+    .record-amount { font-size: 16px; font-weight: 700; color: var(--text-primary); }
+    .record-del {
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-size: 18px;
+      padding: 2px 6px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -571,12 +569,20 @@
 
   <main class="app-content">
     <section id="tab-home" class="tab-page active">
+      <div class="section-title">消费概览</div>
+      <div class="ios-card">
+        <div class="ios-cell clickable" id="home-open-expense">
+          <span>今日消费（预警线 ¥40）</span>
+          <span class="ios-cell-value" id="home-today-spend">¥0.00</span>
+        </div>
+        <div class="ios-cell clickable" id="home-open-expense-2">
+          <span>本月消费（预警线 ¥1200）</span>
+          <span class="ios-cell-value" id="home-month-spend">¥0.00</span>
+        </div>
+      </div>
+
       <div class="section-title">学习概览</div>
       <div class="ios-card">
-        <div class="ios-cell">
-          <span>PWA 全屏模式</span>
-          <span class="ios-cell-value" id="pwa-status">检测中...</span>
-        </div>
         <div class="ios-cell">
           <span>累计已掌握单词</span>
           <span class="ios-cell-value" id="home-vocab-progress">0 词</span>
@@ -585,12 +591,20 @@
           <span>错题本待复习</span>
           <span class="ios-cell-value" id="home-mistake-count" style="color: var(--red);">0 词</span>
         </div>
+        <div class="ios-cell">
+          <span>PWA 全屏模式</span>
+          <span class="ios-cell-value" id="pwa-status">检测中...</span>
+        </div>
       </div>
-      <button class="ios-btn" id="btn-quick-vocab">开始背单词</button>
+
+      <div class="card-actions">
+        <button class="ios-btn" id="btn-quick-vocab">去背单词</button>
+        <button class="ios-btn green" id="btn-quick-expense">记一笔账</button>
+      </div>
     </section>
 
     <section id="tab-tools" class="tab-page">
-      <div class="section-title">学习工具</div>
+      <div class="section-title">我的工具箱</div>
       <div class="ios-card">
         <div class="ios-cell clickable" id="open-vocab-app">
           <span>背单词（四六级 / 雅思）</span>
@@ -599,18 +613,25 @@
             <span style="font-size: 18px; opacity: 0.5;">›</span>
           </span>
         </div>
-        <div class="ios-cell">
-          <span>功能模块 B</span>
-          <span class="ios-cell-value">待开发</span>
+        <div class="ios-cell clickable" id="open-expense-app">
+          <span>日常记账本（每日 / 每月预警）</span>
+          <span class="ios-cell-value">
+            <span id="tools-expense-badge">今日 ¥0</span>
+            <span style="font-size: 18px; opacity: 0.5;">›</span>
+          </span>
         </div>
       </div>
     </section>
 
     <section id="tab-settings" class="tab-page">
-      <div class="section-title">学习数据</div>
+      <div class="section-title">数据管理</div>
       <div class="ios-card">
         <div class="ios-cell clickable" id="btn-reset-vocab">
           <span style="color: var(--red);">清空背单词掌握记录与错题本</span>
+          <span class="ios-cell-value">重置</span>
+        </div>
+        <div class="ios-cell clickable" id="btn-reset-expense">
+          <span style="color: var(--red);">清空所有记账消费记录</span>
           <span class="ios-cell-value">重置</span>
         </div>
       </div>
@@ -618,11 +639,11 @@
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.2.1</span>
+          <span class="ios-cell-value">1.3.0</span>
         </div>
         <div class="ios-cell">
-          <span>外部词库路径</span>
-          <span class="ios-cell-value">./data/*.json</span>
+          <span>预警规则</span>
+          <span class="ios-cell-value">日 ¥40 / 月 ¥1200</span>
         </div>
       </div>
     </section>
@@ -643,7 +664,7 @@
     </button>
   </nav>
 
-  <!-- ================= 背单词子页面 ================= -->
+  <!-- ================= 子页面 A：背单词 ================= -->
   <div id="vocab-view" class="sub-view" aria-hidden="true">
     <header class="ios-header">
       <div class="header-left">
@@ -663,12 +684,10 @@
         <button class="seg-btn" data-book="cet6">六级 CET-6</button>
         <button class="seg-btn" data-book="ielts">雅思 IELTS</button>
       </div>
-
       <div class="book-status-bar">
         <span id="book-source-info">加载中...</span>
         <span id="book-master-info">已掌握 0</span>
       </div>
-
       <div class="mode-pills" id="mode-switcher">
         <button class="mode-pill active" data-mode="card">卡片背诵</button>
         <button class="mode-pill" data-mode="quiz">看词选义</button>
@@ -676,13 +695,67 @@
         <button class="mode-pill" data-mode="spell">听音拼写</button>
         <button class="mode-pill" data-mode="mistakes">错题本 <span class="badge-dot" id="mistake-pill-count" style="display:none;">0</span></button>
       </div>
-
       <div id="vocab-stage"></div>
     </div>
   </div>
 
+  <!-- ================= 子页面 B：日常记账本 ================= -->
+  <div id="expense-view" class="sub-view" aria-hidden="true">
+    <header class="ios-header">
+      <div class="header-left">
+        <button class="nav-text-btn" id="close-expense-app">
+          <span style="font-size: 22px; line-height: 1;">‹</span> 返回
+        </button>
+      </div>
+      <h1>日常记账本</h1>
+    </header>
+
+    <div class="sub-content">
+      <!-- 超支预警区 -->
+      <div id="expense-alerts"></div>
+
+      <!-- 日 / 月 / 年 消费统计 -->
+      <div class="stats-grid" id="expense-stats"></div>
+
+      <!-- 记一笔表单 -->
+      <div class="expense-form-card">
+        <div class="amount-input-wrap">
+          <span class="currency-symbol">¥</span>
+          <input type="number" inputmode="decimal" step="0.01" id="exp-amount" class="amount-input" placeholder="0.00" />
+        </div>
+
+        <div class="cat-grid" id="exp-categories">
+          <button class="cat-chip active" data-cat="餐饮">🍜 餐饮</button>
+          <button class="cat-chip" data-cat="零食饮品">🧋 饮品</button>
+          <button class="cat-chip" data-cat="交通出行">🚇 交通</button>
+          <button class="cat-chip" data-cat="日用购物">🛒 购物</button>
+          <button class="cat-chip" data-cat="娱乐休闲">🎮 娱乐</button>
+          <button class="cat-chip" data-cat="学习办公">📚 学习</button>
+          <button class="cat-chip" data-cat="医疗健康">💊 医疗</button>
+          <button class="cat-chip" data-cat="其他支出">📦 其他</button>
+        </div>
+
+        <input type="text" id="exp-note" class="note-input" placeholder="买了什么？（例如：午饭、拿铁、打车）" />
+        <button class="ios-btn" id="btn-add-expense">记一笔</button>
+      </div>
+
+      <!-- 明细筛选 -->
+      <div class="segmented" id="exp-filter">
+        <button class="seg-btn active" data-range="day">今日明细</button>
+        <button class="seg-btn" data-range="month">本月明细</button>
+        <button class="seg-btn" data-range="year">本年明细</button>
+        <button class="seg-btn" data-range="all">全部</button>
+      </div>
+
+      <!-- 消费流水列表 -->
+      <div id="expense-list"></div>
+    </div>
+  </div>
+
   <script>
-    /* ================= 1. 内置兜底示例词库 ================= */
+    /* ==========================================================
+       模块 A：背单词逻辑
+    ========================================================== */
     const FALLBACK_DB = {
       cet4: [
         { word: 'abandon', phonetic: '/əˈbændən/', pos: 'v.', meaning: '放弃，遗弃，抛弃', example: 'They had to abandon the car and walk the rest of the way.', exampleCn: '他们不得不弃车步行走完剩下的路。' },
@@ -710,17 +783,10 @@
       ]
     };
 
-    /* ================= 2. 外部 JSON 词库动态加载器 ================= */
-    const BOOK_FILES = {
-      cet4: './data/cet4.json',
-      cet6: './data/cet6.json',
-      ielts: './data/ielts.json'
-    };
-
+    const BOOK_FILES = { cet4: './data/cet4.json', cet6: './data/cet6.json', ielts: './data/ielts.json' };
     const loadedBooks = {};
     const bookMeta = {};
 
-    // 兼容 KyleBing、qwerty-learner 及标准格式
     function normalizeEntry(raw) {
       const word = (raw.word || raw.headWord || raw.name || '').trim();
       const phonetic = raw.phonetic || raw.usphone || raw.ukphone || '';
@@ -754,12 +820,11 @@
         bookMeta[bookId] = `完整词库 · 共 ${loadedBooks[bookId].length} 词`;
       } catch {
         loadedBooks[bookId] = FALLBACK_DB[bookId].map(normalizeEntry);
-        bookMeta[bookId] = `内置示例 · 共 ${loadedBooks[bookId].length} 词（上传 data/${bookId}.json 即可扩容）`;
+        bookMeta[bookId] = `内置示例 · 共 ${loadedBooks[bookId].length} 词`;
       }
       return loadedBooks[bookId];
     }
 
-    /* ================= 3. 状态与本地存储 ================= */
     const state = {
       book: 'cet4',
       mode: 'card',
@@ -780,15 +845,8 @@
       updateBadges();
     }
 
-    function addMistake(item) {
-      state.mistakes[item.key] = item;
-      saveProgress();
-    }
-
-    function removeMistake(key) {
-      delete state.mistakes[key];
-      saveProgress();
-    }
+    function addMistake(item) { state.mistakes[item.key] = item; saveProgress(); }
+    function removeMistake(key) { delete state.mistakes[key]; saveProgress(); }
 
     function updateBadges() {
       const mCount = state.mastered.size;
@@ -807,7 +865,6 @@
       document.getElementById('book-master-info').textContent = `已掌握 ${bookMastered} / ${list.length}`;
     }
 
-    /* ================= 4. 语音朗读 ================= */
     function speak(text, customRate) {
       if (!('speechSynthesis' in window) || !text) return;
       window.speechSynthesis.cancel();
@@ -818,15 +875,12 @@
     }
 
     const SPEAKER_SVG = `<svg class="speaker-icon" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>`;
-
-    /* ================= 5. 渲染各学习模式 ================= */
     const stageEl = document.getElementById('vocab-stage');
 
     async function renderStage() {
       stageEl.innerHTML = `<div class="empty-state">正在加载词库...</div>`;
       const list = await loadBook(state.book);
       updateBadges();
-
       if (state.mode === 'card') renderCardMode(list);
       else if (state.mode === 'quiz' || state.mode === 'listen') {
         if (!state.quiz.word) prepareQuiz(list);
@@ -834,12 +888,9 @@
       } else if (state.mode === 'spell') {
         if (!state.spell.word) prepareSpell(list);
         renderSpellMode(list);
-      } else if (state.mode === 'mistakes') {
-        renderMistakesMode();
-      }
+      } else if (state.mode === 'mistakes') renderMistakesMode();
     }
 
-    /* --- 模式 1：卡片背诵 --- */
     function renderCardMode(list) {
       let idx = state.bookIndices[state.book] || 0;
       if (idx >= list.length) idx = 0;
@@ -855,36 +906,24 @@
           </div>
           <div class="word-main">
             <div class="word-text">${item.word}</div>
-            <div class="phonetic-row" id="btn-speak-word">
-              ${SPEAKER_SVG}
-              <span>${item.phonetic || '点击发音'}</span>
-            </div>
+            <div class="phonetic-row" id="btn-speak-word">${SPEAKER_SVG}<span>${item.phonetic || '点击发音'}</span></div>
           </div>
           ${state.revealed ? `
             <div class="reveal-box">
-              <div class="meaning-text">
-                ${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}
-              </div>
+              <div class="meaning-text">${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}</div>
               ${item.example ? `
                 <div class="example-box">
-                  <div class="example-en-row">
-                    <div class="example-en">${item.example}</div>
-                    <button class="icon-btn" id="btn-speak-example">${SPEAKER_SVG}</button>
-                  </div>
+                  <div class="example-en-row"><div class="example-en">${item.example}</div><button class="icon-btn" id="btn-speak-example">${SPEAKER_SVG}</button></div>
                   <div class="example-cn">${item.exampleCn}</div>
                 </div>
               ` : ''}
             </div>
-          ` : `
-            <button class="ios-btn secondary" id="btn-reveal" style="margin-top: 8px;">点击查看释义与例句</button>
-          `}
+          ` : `<button class="ios-btn secondary" id="btn-reveal" style="margin-top: 8px;">点击查看释义与例句</button>`}
         </div>
-
         <div class="card-actions">
           <button class="ios-btn secondary" id="btn-unmaster">${isMastered ? '取消掌握' : '加入错题本'}</button>
           <button class="ios-btn green" id="btn-master">已掌握</button>
         </div>
-
         <div class="nav-arrows">
           <button class="ios-btn secondary" id="btn-prev">上一个</button>
           <button class="ios-btn secondary" id="btn-rand">随机跳词</button>
@@ -897,64 +936,33 @@
         const exBtn = document.getElementById('btn-speak-example');
         if (exBtn) exBtn.addEventListener('click', () => speak(item.example, 0.95));
       } else {
-        document.getElementById('btn-reveal').addEventListener('click', () => {
-          state.revealed = true;
-          renderCardMode(list);
-        });
+        document.getElementById('btn-reveal').addEventListener('click', () => { state.revealed = true; renderCardMode(list); });
       }
-
       document.getElementById('btn-unmaster').addEventListener('click', () => {
-        if (isMastered) {
-          state.mastered.delete(item.key);
-        } else {
-          addMistake(item);
-        }
-        saveProgress();
-        state.revealed = true;
-        renderCardMode(list);
+        if (isMastered) state.mastered.delete(item.key); else addMistake(item);
+        saveProgress(); state.revealed = true; renderCardMode(list);
       });
-
       document.getElementById('btn-master').addEventListener('click', () => {
-        state.mastered.add(item.key);
-        state.bookIndices[state.book] = (idx + 1) % list.length;
-        state.revealed = false;
-        saveProgress();
-        renderCardMode(list);
+        state.mastered.add(item.key); state.bookIndices[state.book] = (idx + 1) % list.length; state.revealed = false; saveProgress(); renderCardMode(list);
       });
-
       document.getElementById('btn-prev').addEventListener('click', () => {
-        state.bookIndices[state.book] = (idx - 1 + list.length) % list.length;
-        state.revealed = false;
-        saveProgress();
-        renderCardMode(list);
+        state.bookIndices[state.book] = (idx - 1 + list.length) % list.length; state.revealed = false; saveProgress(); renderCardMode(list);
       });
-
       document.getElementById('btn-rand').addEventListener('click', () => {
-        state.bookIndices[state.book] = Math.floor(Math.random() * list.length);
-        state.revealed = false;
-        saveProgress();
-        renderCardMode(list);
+        state.bookIndices[state.book] = Math.floor(Math.random() * list.length); state.revealed = false; saveProgress(); renderCardMode(list);
       });
-
       document.getElementById('btn-next').addEventListener('click', () => {
-        state.bookIndices[state.book] = (idx + 1) % list.length;
-        state.revealed = false;
-        saveProgress();
-        renderCardMode(list);
+        state.bookIndices[state.book] = (idx + 1) % list.length; state.revealed = false; saveProgress(); renderCardMode(list);
       });
     }
 
-    /* --- 模式 2 & 3：看词选义 / 听力测试 --- */
     function prepareQuiz(list) {
       const target = list[Math.floor(Math.random() * list.length)];
       const others = [];
       const used = new Set([target.key]);
       while (others.length < Math.min(3, list.length - 1)) {
         const cand = list[Math.floor(Math.random() * list.length)];
-        if (!used.has(cand.key)) {
-          used.add(cand.key);
-          others.push(cand);
-        }
+        if (!used.has(cand.key)) { used.add(cand.key); others.push(cand); }
       }
       state.quiz.word = target;
       state.quiz.options = [target, ...others].sort(() => Math.random() - 0.5);
@@ -968,16 +976,10 @@
       const answered = q.selectedKey !== null;
 
       stageEl.innerHTML = `
-        <div class="quiz-score">
-          <span>${isListen ? '听发音选择中文释义' : '看单词选择中文释义'}</span>
-          <span>对 ${q.correct} / 错 ${q.wrong}</span>
-        </div>
-
+        <div class="quiz-score"><span>${isListen ? '听发音选择中文释义' : '看单词选择中文释义'}</span><span>对 ${q.correct} / 错 ${q.wrong}</span></div>
         <div class="vocab-card" style="text-align: center;">
           ${isListen ? `
-            <button class="listen-btn" id="btn-listen-play">
-              <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-            </button>
+            <button class="listen-btn" id="btn-listen-play"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
             <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 10px;">点击喇叭播放发音</div>
             <div class="speed-row">
               <button class="speed-chip ${state.rate === 1.0 ? 'active' : ''}" data-rate="1">正常语速</button>
@@ -985,13 +987,9 @@
             </div>
           ` : `
             <div class="word-text" style="margin-top: 6px;">${item.word}</div>
-            <div class="phonetic-row" id="btn-quiz-speak">
-              ${SPEAKER_SVG}
-              <span>${item.phonetic || '点击发音'}</span>
-            </div>
+            <div class="phonetic-row" id="btn-quiz-speak">${SPEAKER_SVG}<span>${item.phonetic || '点击发音'}</span></div>
           `}
         </div>
-
         <div class="quiz-options">
           ${q.options.map(opt => {
             let cls = 'option-btn';
@@ -999,12 +997,9 @@
               if (opt.key === item.key) cls += ' correct';
               else if (opt.key === q.selectedKey) cls += ' wrong';
             }
-            return `<button class="${cls}" data-key="${opt.key}" ${answered ? 'disabled' : ''}>
-              ${opt.pos ? `<span class="pos-tag">${opt.pos}</span>` : ''}${opt.meaning}
-            </button>`;
+            return `<button class="${cls}" data-key="${opt.key}" ${answered ? 'disabled' : ''}>${opt.pos ? `<span class="pos-tag">${opt.pos}</span>` : ''}${opt.meaning}</button>`;
           }).join('')}
         </div>
-
         ${answered ? `
           <div class="quiz-reveal-card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
@@ -1021,11 +1016,7 @@
       if (isListen) {
         document.getElementById('btn-listen-play').addEventListener('click', () => speak(item.word, state.rate));
         stageEl.querySelectorAll('.speed-chip').forEach(btn => {
-          btn.addEventListener('click', () => {
-            state.rate = Number(btn.dataset.rate);
-            renderQuizMode(list);
-            speak(item.word, state.rate);
-          });
+          btn.addEventListener('click', () => { state.rate = Number(btn.dataset.rate); renderQuizMode(list); speak(item.word, state.rate); });
         });
       } else {
         document.getElementById('btn-quiz-speak').addEventListener('click', () => speak(item.word));
@@ -1035,12 +1026,8 @@
         btn.addEventListener('click', () => {
           if (state.quiz.selectedKey !== null) return;
           state.quiz.selectedKey = btn.dataset.key;
-          if (btn.dataset.key === item.key) {
-            state.quiz.correct += 1;
-          } else {
-            state.quiz.wrong += 1;
-            addMistake(item);
-          }
+          if (btn.dataset.key === item.key) state.quiz.correct += 1;
+          else { state.quiz.wrong += 1; addMistake(item); }
           renderQuizMode(list);
         });
       });
@@ -1048,20 +1035,15 @@
       if (answered) {
         document.getElementById('btn-reveal-speak').addEventListener('click', () => speak(item.word));
         document.getElementById('btn-next-quiz').addEventListener('click', () => {
-          prepareQuiz(list);
-          renderQuizMode(list);
+          prepareQuiz(list); renderQuizMode(list);
           if (isListen) speak(state.quiz.word.word, state.rate);
         });
       }
     }
 
-    /* --- 模式 4：听音拼写 --- */
     function prepareSpell(list) {
       state.spell.word = list[Math.floor(Math.random() * list.length)];
-      state.spell.submitted = false;
-      state.spell.isCorrect = false;
-      state.spell.userInput = '';
-      state.spell.showHint = false;
+      state.spell.submitted = false; state.spell.isCorrect = false; state.spell.userInput = ''; state.spell.showHint = false;
     }
 
     function renderSpellMode(list) {
@@ -1070,53 +1052,22 @@
       const hintMask = item.word[0] + ' ' + '_ '.repeat(Math.max(0, item.word.length - 1)).trim();
 
       stageEl.innerHTML = `
-        <div class="quiz-score">
-          <span>听发音并拼写出完整英文单词</span>
-          <span>对 ${sp.correct} / 错 ${sp.wrong}</span>
-        </div>
-
+        <div class="quiz-score"><span>听发音并拼写出完整英文单词</span><span>对 ${sp.correct} / 错 ${sp.wrong}</span></div>
         <div class="vocab-card" style="text-align: center;">
-          <button class="listen-btn" id="btn-spell-play">
-            <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-          </button>
+          <button class="listen-btn" id="btn-spell-play"><svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg></button>
           <div class="speed-row">
             <button class="speed-chip ${state.rate === 1.0 ? 'active' : ''}" data-rate="1">正常语速</button>
             <button class="speed-chip ${state.rate === 0.75 ? 'active' : ''}" data-rate="0.75">0.75x 慢速</button>
           </div>
-          <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">
-            ${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}
-          </div>
+          <div style="font-size: 15px; font-weight: 600; margin-top: 10px;">${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}</div>
           ${sp.showHint && !sp.submitted ? `<div style="margin-top: 8px; font-size: 16px; letter-spacing: 2px; color: var(--accent); font-weight: 600;">${hintMask} (${item.word.length} 字母)</div>` : ''}
-
-          <input
-            type="text"
-            id="spell-input"
-            class="spell-input ${sp.submitted ? (sp.isCorrect ? 'correct' : 'wrong') : ''}"
-            placeholder="输入英文单词..."
-            value="${sp.userInput}"
-            autocomplete="off"
-            autocorrect="off"
-            autocapitalize="none"
-            spellcheck="false"
-            ${sp.submitted ? 'disabled' : ''}
-          />
-
-          ${!sp.submitted ? `
-            <div class="card-actions" style="margin-bottom: 0;">
-              <button class="ios-btn secondary" id="btn-spell-hint">首字母提示</button>
-              <button class="ios-btn" id="btn-spell-submit">提交检查</button>
-            </div>
-          ` : ''}
+          <input type="text" id="spell-input" class="spell-input ${sp.submitted ? (sp.isCorrect ? 'correct' : 'wrong') : ''}" placeholder="输入英文单词..." value="${sp.userInput}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" ${sp.submitted ? 'disabled' : ''} />
+          ${!sp.submitted ? `<div class="card-actions" style="margin-bottom: 0;"><button class="ios-btn secondary" id="btn-spell-hint">首字母提示</button><button class="ios-btn" id="btn-spell-submit">提交检查</button></div>` : ''}
         </div>
-
         ${sp.submitted ? `
           <div class="quiz-reveal-card">
-            <div style="font-size: 14px; font-weight: 600; color: ${sp.isCorrect ? 'var(--green)' : 'var(--red)'}; margin-bottom: 6px;">
-              ${sp.isCorrect ? '拼写正确！' : '拼写有误，已自动加入错题本'}
-            </div>
-            <div style="font-size: 20px; font-weight: 700; margin-bottom: 6px;">
-              ${item.word} <span style="font-weight:400; font-size:14px; color:var(--text-secondary);">${item.phonetic}</span>
-            </div>
+            <div style="font-size: 14px; font-weight: 600; color: ${sp.isCorrect ? 'var(--green)' : 'var(--red)'}; margin-bottom: 6px;">${sp.isCorrect ? '拼写正确！' : '拼写有误，已自动加入错题本'}</div>
+            <div style="font-size: 20px; font-weight: 700; margin-bottom: 6px;">${item.word} <span style="font-weight:400; font-size:14px; color:var(--text-secondary);">${item.phonetic}</span></div>
             ${item.example ? `<div class="example-en" style="margin-bottom:4px;">${item.example}</div><div class="example-cn">${item.exampleCn}</div>` : ''}
           </div>
           <button class="ios-btn" id="btn-next-spell" style="margin-top: 12px;">下一题</button>
@@ -1125,11 +1076,7 @@
 
       document.getElementById('btn-spell-play').addEventListener('click', () => speak(item.word, state.rate));
       stageEl.querySelectorAll('.speed-chip').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.rate = Number(btn.dataset.rate);
-          renderSpellMode(list);
-          speak(item.word, state.rate);
-        });
+        btn.addEventListener('click', () => { state.rate = Number(btn.dataset.rate); renderSpellMode(list); speak(item.word, state.rate); });
       });
 
       if (!sp.submitted) {
@@ -1137,88 +1084,229 @@
         const doSubmit = () => {
           const val = inputEl.value.trim();
           if (!val) return;
-          sp.userInput = val;
-          sp.submitted = true;
+          sp.userInput = val; sp.submitted = true;
           sp.isCorrect = val.toLowerCase() === item.word.toLowerCase();
-          if (sp.isCorrect) {
-            sp.correct += 1;
-          } else {
-            sp.wrong += 1;
-            addMistake(item);
-          }
+          if (sp.isCorrect) sp.correct += 1; else { sp.wrong += 1; addMistake(item); }
           renderSpellMode(list);
         };
-
         document.getElementById('btn-spell-submit').addEventListener('click', doSubmit);
         inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') doSubmit(); });
-        document.getElementById('btn-spell-hint').addEventListener('click', () => {
-          sp.userInput = inputEl.value;
-          sp.showHint = true;
-          renderSpellMode(list);
-        });
+        document.getElementById('btn-spell-hint').addEventListener('click', () => { sp.userInput = inputEl.value; sp.showHint = true; renderSpellMode(list); });
       } else {
-        document.getElementById('btn-next-spell').addEventListener('click', () => {
-          prepareSpell(list);
-          renderSpellMode(list);
-          speak(state.spell.word.word, state.rate);
-        });
+        document.getElementById('btn-next-spell').addEventListener('click', () => { prepareSpell(list); renderSpellMode(list); speak(state.spell.word.word, state.rate); });
       }
     }
 
-    /* --- 模式 5：错题本 --- */
     function renderMistakesMode() {
       const items = Object.values(state.mistakes);
       if (items.length === 0) {
-        stageEl.innerHTML = `<div class="empty-state">错题本目前是空的。<br/>在“看词选义”、“听力测试”或“听音拼写”中答错的单词会自动收录到这里。</div>`;
+        stageEl.innerHTML = `<div class="empty-state">错题本目前是空的。<br/>在测验中答错的单词会自动收录到这里。</div>`;
         return;
       }
-
       stageEl.innerHTML = `
-        <div class="quiz-score">
-          <span>共收录 ${items.length} 个错词</span>
-          <button style="background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;" id="btn-clear-mistakes">清空全部</button>
-        </div>
+        <div class="quiz-score"><span>共收录 ${items.length} 个错词</span><button style="background:none;border:none;color:var(--red);font-size:13px;cursor:pointer;" id="btn-clear-mistakes">清空全部</button></div>
         ${items.map(item => `
           <div class="mistake-item">
             <div class="mistake-top">
-              <div>
-                <span class="mistake-word">${item.word}</span>
-                <span style="font-size:13px; color:var(--text-secondary); margin-left:6px;">${item.phonetic}</span>
-              </div>
-              <div class="mistake-actions">
-                <button class="icon-btn btn-m-speak" data-word="${item.word}">${SPEAKER_SVG}</button>
-                <button class="remove-tag btn-m-remove" data-key="${item.key}">已掌握</button>
-              </div>
+              <div><span class="mistake-word">${item.word}</span><span style="font-size:13px; color:var(--text-secondary); margin-left:6px;">${item.phonetic}</span></div>
+              <div class="mistake-actions"><button class="icon-btn btn-m-speak" data-word="${item.word}">${SPEAKER_SVG}</button><button class="remove-tag btn-m-remove" data-key="${item.key}">已掌握</button></div>
             </div>
-            <div style="font-size:14px; margin-bottom:4px;">
-              ${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}
-            </div>
+            <div style="font-size:14px; margin-bottom:4px;">${item.pos ? `<span class="pos-tag">${item.pos}</span>` : ''}${item.meaning}</div>
             ${item.example ? `<div class="example-cn">${item.example}</div>` : ''}
           </div>
         `).join('')}
       `;
+      document.getElementById('btn-clear-mistakes').addEventListener('click', () => { if (confirm('确定清空所有错题吗？')) { state.mistakes = {}; saveProgress(); renderMistakesMode(); } });
+      stageEl.querySelectorAll('.btn-m-speak').forEach(btn => btn.addEventListener('click', () => speak(btn.dataset.word)));
+      stageEl.querySelectorAll('.btn-m-remove').forEach(btn => btn.addEventListener('click', () => { removeMistake(btn.dataset.key); renderMistakesMode(); }));
+    }
 
-      document.getElementById('btn-clear-mistakes').addEventListener('click', () => {
-        if (confirm('确定清空所有错题吗？')) {
-          state.mistakes = {};
-          saveProgress();
-          renderMistakesMode();
-        }
+    /* ==========================================================
+       模块 B：日常记账本逻辑（日/月/年统计 + 40/1200预警）
+    ========================================================== */
+    const DAILY_LIMIT = 40;
+    const MONTHLY_LIMIT = 1200;
+
+    const expState = {
+      records: JSON.parse(localStorage.getItem('expense_records_v1') || '[]'),
+      selectedCat: '餐饮',
+      filterRange: 'day'
+    };
+
+    function getLocalDateParts(ts) {
+      const d = new Date(ts);
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const day = String(d.getDate()).padStart(2, '0');
+      const hh = String(d.getHours()).padStart(2, '0');
+      const mm = String(d.getMinutes()).padStart(2, '0');
+      return {
+        yearStr: `${y}`,
+        monthStr: `${y}-${m}`,
+        dayStr: `${y}-${m}-${day}`,
+        displayTime: `${m}-${day} ${hh}:${mm}`
+      };
+    }
+
+    function saveExpenses() {
+      localStorage.setItem('expense_records_v1', JSON.stringify(expState.records));
+      renderExpenseDashboard();
+    }
+
+    function calcExpenseTotals() {
+      const now = getLocalDateParts(Date.now());
+      let daySum = 0, monthSum = 0, yearSum = 0;
+      expState.records.forEach(r => {
+        const p = getLocalDateParts(r.ts);
+        if (p.yearStr === now.yearStr) yearSum += r.amount;
+        if (p.monthStr === now.monthStr) monthSum += r.amount;
+        if (p.dayStr === now.dayStr) daySum += r.amount;
+      });
+      return { daySum, monthSum, yearSum };
+    }
+
+    function renderExpenseDashboard() {
+      const { daySum, monthSum, yearSum } = calcExpenseTotals();
+      const dayOver = daySum > DAILY_LIMIT;
+      const monthOver = monthSum > MONTHLY_LIMIT;
+
+      // 1. 同步更新首页和工具页的概览数值
+      const homeDayEl = document.getElementById('home-today-spend');
+      homeDayEl.textContent = `¥${daySum.toFixed(2)}${dayOver ? ' (超支)' : ''}`;
+      homeDayEl.style.color = dayOver ? 'var(--red)' : 'var(--text-secondary)';
+
+      const homeMonthEl = document.getElementById('home-month-spend');
+      homeMonthEl.textContent = `¥${monthSum.toFixed(2)}${monthOver ? ' (超支)' : ''}`;
+      homeMonthEl.style.color = monthOver ? 'var(--red)' : 'var(--text-secondary)';
+
+      document.getElementById('tools-expense-badge').textContent = `今日 ¥${daySum.toFixed(1)}`;
+
+      // 2. 渲染超支预警横幅
+      const alertsEl = document.getElementById('expense-alerts');
+      let alertHtml = '';
+      if (dayOver) {
+        alertHtml += `<div class="alert-banner">⚠️ 今日消费预警：已花费 ¥${daySum.toFixed(2)}，超出每日 ¥${DAILY_LIMIT} 限额（超支 ¥${(daySum - DAILY_LIMIT).toFixed(2)}）</div>`;
+      }
+      if (monthOver) {
+        alertHtml += `<div class="alert-banner">🚨 本月消费预警：已花费 ¥${monthSum.toFixed(2)}，超出每月 ¥${MONTHLY_LIMIT} 限额（超支 ¥${(monthSum - MONTHLY_LIMIT).toFixed(2)}）</div>`;
+      }
+      alertsEl.innerHTML = alertHtml;
+
+      // 3. 渲染 日/月/年 统计卡片
+      const dayPct = Math.min(100, (daySum / DAILY_LIMIT) * 100);
+      const monthPct = Math.min(100, (monthSum / MONTHLY_LIMIT) * 100);
+
+      document.getElementById('expense-stats').innerHTML = `
+        <div class="stat-box">
+          <div class="stat-label">今日消费</div>
+          <div class="stat-num ${dayOver ? 'over' : ''}">¥${daySum.toFixed(2)}</div>
+          <div class="stat-sub">限额 ¥${DAILY_LIMIT}</div>
+          <div class="progress-track"><div class="progress-fill ${dayOver ? 'over' : ''}" style="width:${dayPct}%"></div></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">本月消费</div>
+          <div class="stat-num ${monthOver ? 'over' : ''}">¥${monthSum.toFixed(2)}</div>
+          <div class="stat-sub">限额 ¥${MONTHLY_LIMIT}</div>
+          <div class="progress-track"><div class="progress-fill ${monthOver ? 'over' : ''}" style="width:${monthPct}%"></div></div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">本年消费</div>
+          <div class="stat-num">¥${yearSum.toFixed(2)}</div>
+          <div class="stat-sub">${new Date().getFullYear()} 年</div>
+        </div>
+      `;
+
+      // 4. 渲染筛选后的消费明细列表
+      const now = getLocalDateParts(Date.now());
+      const filtered = expState.records.filter(r => {
+        const p = getLocalDateParts(r.ts);
+        if (expState.filterRange === 'day') return p.dayStr === now.dayStr;
+        if (expState.filterRange === 'month') return p.monthStr === now.monthStr;
+        if (expState.filterRange === 'year') return p.yearStr === now.yearStr;
+        return true;
       });
 
-      stageEl.querySelectorAll('.btn-m-speak').forEach(btn => {
-        btn.addEventListener('click', () => speak(btn.dataset.word));
-      });
+      const listEl = document.getElementById('expense-list');
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div class="empty-state">当前时间范围内还没有消费记录</div>`;
+        return;
+      }
 
-      stageEl.querySelectorAll('.btn-m-remove').forEach(btn => {
+      listEl.innerHTML = filtered.map(r => {
+        const p = getLocalDateParts(r.ts);
+        return `
+          <div class="record-item">
+            <div class="record-left">
+              <div class="record-title">
+                <span class="record-cat-tag">${r.category}</span>
+                <span>${r.note || r.category}</span>
+              </div>
+              <div class="record-time">${p.displayTime}</div>
+            </div>
+            <div class="record-right">
+              <span class="record-amount">-¥${r.amount.toFixed(2)}</span>
+              <button class="record-del" data-id="${r.id}" aria-label="删除">×</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      listEl.querySelectorAll('.record-del').forEach(btn => {
         btn.addEventListener('click', () => {
-          removeMistake(btn.dataset.key);
-          renderMistakesMode();
+          if (confirm('删除这笔消费记录？')) {
+            expState.records = expState.records.filter(r => String(r.id) !== btn.dataset.id);
+            saveExpenses();
+          }
         });
       });
     }
 
-    /* ================= 6. 全局事件绑定 ================= */
+    // 分类选择
+    document.getElementById('exp-categories').addEventListener('click', (e) => {
+      const btn = e.target.closest('.cat-chip');
+      if (!btn) return;
+      document.querySelectorAll('#exp-categories .cat-chip').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      expState.selectedCat = btn.dataset.cat;
+    });
+
+    // 添加消费
+    document.getElementById('btn-add-expense').addEventListener('click', () => {
+      const amountInput = document.getElementById('exp-amount');
+      const noteInput = document.getElementById('exp-note');
+      const val = parseFloat(amountInput.value);
+
+      if (isNaN(val) || val <= 0) {
+        alert('请输入有效的消费金额');
+        return;
+      }
+
+      expState.records.unshift({
+        id: Date.now(),
+        ts: Date.now(),
+        amount: Math.round(val * 100) / 100,
+        category: expState.selectedCat,
+        note: noteInput.value.trim()
+      });
+
+      amountInput.value = '';
+      noteInput.value = '';
+      saveExpenses();
+    });
+
+    // 明细范围切换
+    document.getElementById('exp-filter').addEventListener('click', (e) => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      document.querySelectorAll('#exp-filter .seg-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      expState.filterRange = btn.dataset.range;
+      renderExpenseDashboard();
+    });
+
+    /* ==========================================================
+       全局导航与事件绑定
+    ========================================================== */
     const tabs = document.querySelectorAll('.tab-item');
     const pages = document.querySelectorAll('.tab-page');
     const titleEl = document.getElementById('page-title');
@@ -1233,26 +1321,29 @@
       });
     });
 
+    // 打开/关闭 背单词
     const vocabView = document.getElementById('vocab-view');
-    function openVocab() {
-      vocabView.classList.add('open');
-      vocabView.setAttribute('aria-hidden', 'false');
-      renderStage();
-    }
-    function closeVocab() {
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      vocabView.classList.remove('open');
-      vocabView.setAttribute('aria-hidden', 'true');
-    }
+    function openVocab() { vocabView.classList.add('open'); vocabView.setAttribute('aria-hidden', 'false'); renderStage(); }
+    function closeVocab() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); vocabView.classList.remove('open'); vocabView.setAttribute('aria-hidden', 'true'); }
 
     document.getElementById('open-vocab-app').addEventListener('click', openVocab);
     document.getElementById('btn-quick-vocab').addEventListener('click', openVocab);
     document.getElementById('close-vocab-app').addEventListener('click', closeVocab);
 
+    // 打开/关闭 记账本
+    const expenseView = document.getElementById('expense-view');
+    function openExpense() { expenseView.classList.add('open'); expenseView.setAttribute('aria-hidden', 'false'); renderExpenseDashboard(); }
+    function closeExpense() { expenseView.classList.remove('open'); expenseView.setAttribute('aria-hidden', 'true'); }
+
+    document.getElementById('open-expense-app').addEventListener('click', openExpense);
+    document.getElementById('btn-quick-expense').addEventListener('click', openExpense);
+    document.getElementById('home-open-expense').addEventListener('click', openExpense);
+    document.getElementById('home-open-expense-2').addEventListener('click', openExpense);
+    document.getElementById('close-expense-app').addEventListener('click', closeExpense);
+
+    // 发音与词书切换
     const accentBtn = document.getElementById('btn-accent');
-    function updateAccentLabel() {
-      accentBtn.textContent = state.accent === 'en-US' ? '美音 US' : '英音 UK';
-    }
+    function updateAccentLabel() { accentBtn.textContent = state.accent === 'en-US' ? '美音 US' : '英音 UK'; }
     updateAccentLabel();
     accentBtn.addEventListener('click', () => {
       state.accent = state.accent === 'en-US' ? 'en-GB' : 'en-US';
@@ -1265,10 +1356,7 @@
       if (!btn) return;
       document.querySelectorAll('#book-switcher .seg-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      state.book = btn.dataset.book;
-      state.revealed = false;
-      state.quiz.word = null;
-      state.spell.word = null;
+      state.book = btn.dataset.book; state.revealed = false; state.quiz.word = null; state.spell.word = null;
       renderStage();
     });
 
@@ -1277,25 +1365,30 @@
       if (!btn) return;
       document.querySelectorAll('#mode-switcher .mode-pill').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-      state.mode = btn.dataset.mode;
-      state.quiz.word = null;
-      state.spell.word = null;
+      state.mode = btn.dataset.mode; state.quiz.word = null; state.spell.word = null;
       renderStage();
     });
 
+    // 数据重置
     document.getElementById('btn-reset-vocab').addEventListener('click', () => {
       if (confirm('确定要清空所有掌握记录和错题本吗？')) {
-        state.mastered.clear();
-        state.mistakes = {};
-        state.bookIndices = { cet4: 0, cet6: 0, ielts: 0 };
-        saveProgress();
-        alert('已重置');
+        state.mastered.clear(); state.mistakes = {}; state.bookIndices = { cet4: 0, cet6: 0, ielts: 0 };
+        saveProgress(); alert('已重置背单词数据');
+      }
+    });
+
+    document.getElementById('btn-reset-expense').addEventListener('click', () => {
+      if (confirm('确定要清空所有记账消费记录吗？')) {
+        expState.records = [];
+        saveExpenses(); alert('已清空记账数据');
       }
     });
 
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     document.getElementById('pwa-status').textContent = isStandalone ? '已开启 (原生全屏)' : '浏览器内运行';
+
     updateBadges();
+    renderExpenseDashboard();
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
