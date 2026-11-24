@@ -1,4 +1,4 @@
-const CACHE_NAME = 'ios-pwa-v2';
+const CACHE_NAME = 'ios-pwa-v3';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', (e) => {
@@ -18,6 +18,15 @@ self.addEventListener('activate', (e) => {
 
 self.addEventListener('fetch', (e) => {
   e.respondWith(
-    fetch(e.request).catch(() => caches.match(e.request))
+    fetch(e.request)
+      .then((res) => {
+        // 自动缓存外部词库 JSON 文件，支持离线背诵
+        if (e.request.url.includes('/data/') && res.ok) {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+        }
+        return res;
+      })
+      .catch(() => caches.match(e.request))
   );
 });
