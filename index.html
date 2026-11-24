@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <!-- 关键：viewport-fit=cover 让页面铺满灵动岛和底部安全区 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>My iOS App</title>
+
+  <!-- PWA 与 iOS 添加到主屏幕核心配置 -->
+  <link rel="manifest" href="./manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <!-- black-translucent 让状态栏透明悬浮在页面顶部，配合毛玻璃顶栏最像原生 App -->
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="我的应用" />
+  <!-- 替换为你自己的 180x180 PNG 桌面图标 -->
+  <link rel="apple-touch-icon" href="./icon-180.png" />
+
+  <!-- 动态状态栏/浏览器顶栏底色（适配深浅模式） -->
+  <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+
+  <style>
+    /* iOS 系统配色变量 */
+    :root {
+      --bg-primary: #F2F2F7;
+      --bg-card: #FFFFFF;
+      --bg-bar: rgba(249, 249, 249, 0.82);
+      --text-primary: #000000;
+      --text-secondary: #8E8E93;
+      --accent: #007AFF;
+      --separator: rgba(60, 60, 67, 0.18);
+      --safe-top: env(safe-area-inset-top, 0px);
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --header-height: 48px;
+      --tabbar-height: 54px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-primary: #000000;
+        --bg-card: #1C1C1E;
+        --bg-bar: rgba(28, 28, 30, 0.82);
+        --text-primary: #FFFFFF;
+        --text-secondary: #8E8E93;
+        --accent: #0A84FF;
+        --separator: rgba(84, 84, 88, 0.45);
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden; /* 锁定外层，让 main 区域独立滚动 */
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "PingFang SC", "Helvetica Neue", sans-serif;
+      -webkit-font-smoothing: antialiased;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    /* 顶部毛玻璃导航栏 */
+    .ios-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding-top: var(--safe-top);
+      height: calc(var(--header-height) + var(--safe-top));
+      background: var(--bg-bar);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-bottom: 0.5px solid var(--separator);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ios-header h1 {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+    }
+
+    /* 中间独立滚动内容区 */
+    .app-content {
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: calc(var(--header-height) + var(--safe-top) + 16px);
+      padding-bottom: calc(var(--tabbar-height) + var(--safe-bottom) + 24px);
+      padding-left: 16px;
+      padding-right: 16px;
+    }
+
+    .tab-page {
+      display: none;
+      animation: fadeIn 0.18s ease-out;
+    }
+
+    .tab-page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* iOS 分组标题与圆角列表卡片 */
+    .section-title {
+      font-size: 13px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin: 0 0 8px 14px;
+    }
+
+    .ios-card {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .ios-cell {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      min-height: 48px;
+      position: relative;
+      font-size: 16px;
+    }
+
+    .ios-cell:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 16px;
+      right: 0;
+      bottom: 0;
+      height: 0.5px;
+      background: var(--separator);
+    }
+
+    .ios-cell-value {
+      color: var(--text-secondary);
+      font-size: 15px;
+    }
+
+    .ios-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent);
+      color: #FFFFFF;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .ios-btn:active {
+      opacity: 0.78;
+    }
+
+    /* 底部毛玻璃 Tab 栏 */
+    .ios-tabbar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding-bottom: var(--safe-bottom);
+      height: calc(var(--tabbar-height) + var(--safe-bottom));
+      background: var(--bg-bar);
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      border-top: 0.5px solid var(--separator);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+
+    .tab-item {
+      flex: 1;
+      height: var(--tabbar-height);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 10px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+
+    .tab-item svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .tab-item.active {
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <!-- 顶部栏 -->
+  <header class="ios-header">
+    <h1 id="page-title">首页</h1>
+  </header>
+
+  <!-- 页面主体 -->
+  <main class="app-content">
+    <!-- Tab 1: 首页 -->
+    <section id="tab-home" class="tab-page active">
+      <div class="section-title">运行状态</div>
+      <div class="ios-card">
+        <div class="ios-cell">
+          <span>PWA 全屏模式</span>
+          <span class="ios-cell-value" id="pwa-status">检测中...</span>
+        </div>
+        <div class="ios-cell">
+          <span>本地点击计数</span>
+          <span class="ios-cell-value" id="counter-val">0</span>
+        </div>
+      </div>
+      <button class="ios-btn" id="btn-count">点击测试本地存储 (+1)</button>
+    </section>
+
+    <!-- Tab 2: 工具 -->
+    <section id="tab-tools" class="tab-page">
+      <div class="section-title">常用功能</div>
+      <div class="ios-card">
+        <div class="ios-cell">
+          <span>功能模块 A</span>
+          <span class="ios-cell-value">待开发</span>
+        </div>
+        <div class="ios-cell">
+          <span>功能模块 B</span>
+          <span class="ios-cell-value">待开发</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tab 3: 设置 -->
+    <section id="tab-settings" class="tab-page">
+      <div class="section-title">关于应用</div>
+      <div class="ios-card">
+        <div class="ios-cell">
+          <span>版本号</span>
+          <span class="ios-cell-value">1.0.0</span>
+        </div>
+        <div class="ios-cell">
+          <span>外观模式</span>
+          <span class="ios-cell-value">跟随系统</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 底部导航栏 -->
+  <nav class="ios-tabbar" aria-label="主导航">
+    <button class="tab-item active" data-target="tab-home" data-title="首页">
+      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+      <span>首页</span>
+    </button>
+    <button class="tab-item" data-target="tab-tools" data-title="工具">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span>工具</span>
+    </button>
+    <button class="tab-item" data-target="tab-settings" data-title="设置">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      <span>设置</span>
+    </button>
+  </nav>
+
+  <script>
+    // 1. 底部 Tab 切换逻辑
+    const tabs = document.querySelectorAll('.tab-item');
+    const pages = document.querySelectorAll('.tab-page');
+    const titleEl = document.getElementById('page-title');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        pages.forEach(p => p.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.target).classList.add('active');
+        titleEl.textContent = tab.dataset.title;
+      });
+    });
+
+    // 2. 检测是否已从主屏幕独立启动
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    document.getElementById('pwa-status').textContent = isStandalone ? '已开启 (原生全屏)' : '浏览器内运行';
+
+    // 3. 本地存储演示（关闭重开后数据不丢失）
+    const counterEl = document.getElementById('counter-val');
+    let count = Number(localStorage.getItem('demo_count') || 0);
+    counterEl.textContent = count;
+
+    document.getElementById('btn-count').addEventListener('click', () => {
+      count += 1;
+      counterEl.textContent = count;
+      localStorage.setItem('demo_count', count);
+    });
+
+    // 4. 注册 Service Worker（支持离线缓存，需在 HTTPS 或 localhost 下生效）
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
