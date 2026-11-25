@@ -84,6 +84,50 @@
     .ios-cell:not(:last-child)::after { content: ""; position: absolute; left: 16px; right: 0; bottom: 0; height: 0.5px; background: var(--separator); }
     .ios-cell-value { color: var(--text-secondary); font-size: 15px; display: flex; align-items: center; gap: 6px; }
 
+    /* ================= 工具页：2列方块网格 ================= */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .tool-tile {
+      position: relative;
+      height: 158px;
+      border-radius: 24px;
+      overflow: hidden;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      cursor: pointer;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+      transition: transform 0.15s ease;
+    }
+
+    .tool-tile:active { transform: scale(0.96); }
+
+    .tool-tile::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.02) 35%, rgba(0, 0, 0, 0.32) 100%);
+      pointer-events: none;
+    }
+
+    .tool-tile-title {
+      position: relative;
+      z-index: 2;
+      color: #FFFFFF;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: -0.2px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    }
+
     .ios-btn { width: 100%; padding: 13px 16px; border: none; border-radius: 12px; background: var(--accent); color: #FFFFFF; font-size: 16px; font-weight: 600; cursor: pointer; }
     .ios-btn:active { opacity: 0.78; } .ios-btn:disabled { opacity: 0.5; }
     .ios-btn.secondary { background: var(--bg-subtle); color: var(--text-primary); }
@@ -144,8 +188,7 @@
     </section>
 
     <section id="tab-tools" class="tab-page">
-      <div class="section-title">我的工具箱</div>
-      <div class="ios-card" id="tools-list-container"></div>
+      <div class="tools-grid" id="tools-list-container"></div>
     </section>
   </main>
 
@@ -177,13 +220,12 @@
       <div class="ios-card" id="settings-reset-list"></div>
       <div class="section-title">关于应用</div>
       <div class="ios-card">
-        <div class="ios-cell"><span>架构版本</span><span class="ios-cell-value">2.0.0 (模块化)</span></div>
+        <div class="ios-cell"><span>架构版本</span><span class="ios-cell-value">2.1.0 (模块化)</span></div>
         <div class="ios-cell"><span>返回手势</span><span class="ios-cell-value">左侧边缘右划</span></div>
       </div>
     </div>
   </div>
 
-  <!-- 动态挂载各工具子页面的容器 -->
   <div id="tool-views-root"></div>
 
   <script type="module">
@@ -205,7 +247,35 @@
     document.getElementById('theme-switcher').onclick = (e) => { const b = e.target.closest('.seg-btn'); if (b) applyTheme(b.dataset.themeOpt); };
     applyTheme(themeMode);
 
-    // 2. 公共能力中心（提供给所有工具模块调用）
+    // 2. 工具方块专属底图生成（离线高清矢量）
+    function makeTileBg(c1, c2, symbol) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="280" viewBox="0 0 320 280">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="${c1}"/>
+            <stop offset="100%" stop-color="${c2}"/>
+          </linearGradient>
+        </defs>
+        <rect width="320" height="280" fill="url(#g)"/>
+        <circle cx="265" cy="52" r="88" fill="rgba(255,255,255,0.14)"/>
+        <circle cx="38" cy="240" r="72" fill="rgba(0,0,0,0.08)"/>
+        <text x="230" y="130" font-size="112" text-anchor="middle" opacity="0.28">${symbol}</text>
+      </svg>`;
+      return `url("data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}")`;
+    }
+
+    const TOOL_THEMES = {
+      vocab: makeTileBg('#5E8BFF', '#7C4DFF', '📖'),
+      expense: makeTileBg('#34C759', '#00A896', '💰'),
+      food: makeTileBg('#FF9500', '#FF3B5C', '🍜')
+    };
+
+    const FALLBACK_THEMES = [
+      makeTileBg('#AF52DE', '#5856D6', '✨'),
+      makeTileBg('#00B4D8', '#0077B6', '⚡')
+    ];
+
+    // 3. 公共能力中心
     let toastTimer = null;
     const toolMap = {};
     const app = {
@@ -232,10 +302,7 @@
         document.getElementById('tool-views-root').appendChild(el);
         return el;
       },
-      updateToolBadge(id, text) {
-        const el = document.getElementById(`tool-badge-${id}`);
-        if (el) el.textContent = text;
-      },
+      updateToolBadge() {},
       openTool(id) {
         if (toolMap[id]) toolMap[id].open();
       },
@@ -267,19 +334,22 @@
       }
     };
 
-    // 3. 动态渲染工具箱、首页快捷入口、设置重置项，并初始化所有模块
+    // 4. 渲染方块网格、首页快捷入口、设置重置项，并初始化模块
     const toolsContainer = document.getElementById('tools-list-container');
     const quickContainer = document.getElementById('home-quick-actions');
     const resetContainer = document.getElementById('settings-reset-list');
 
-    TOOLS.forEach(tool => {
+    TOOLS.forEach((tool, idx) => {
       toolMap[tool.id] = tool;
 
-      const cell = document.createElement('div');
-      cell.className = 'ios-cell clickable';
-      cell.innerHTML = `<span>${tool.name}</span><span class="ios-cell-value"><span id="tool-badge-${tool.id}"></span><span style="font-size:18px;opacity:0.5;">›</span></span>`;
-      cell.onclick = () => tool.open();
-      toolsContainer.appendChild(cell);
+      const tile = document.createElement('div');
+      tile.className = 'tool-tile';
+      tile.style.backgroundImage = tool.tileBg || TOOL_THEMES[tool.id] || FALLBACK_THEMES[idx % FALLBACK_THEMES.length];
+      // 去掉括号里的副标题，让方块内文字更干净
+      const cleanTitle = tool.name.replace(/（.*?）/g, '').trim();
+      tile.innerHTML = `<div class="tool-tile-title">${cleanTitle}</div>`;
+      tile.onclick = () => tool.open();
+      toolsContainer.appendChild(tile);
 
       const qBtn = document.createElement('button');
       qBtn.className = `ios-btn ${tool.btnClass || ''}`;
@@ -298,7 +368,7 @@
       tool.init(app);
     });
 
-    // 4. 首页点击概览直接跳对应工具 & 底部 Tab 切换
+    // 5. 首页点击概览 & 底部 Tab 切换
     document.querySelectorAll('[data-open-tool]').forEach(el => {
       el.onclick = () => app.openTool(el.dataset.openTool);
     });
@@ -316,7 +386,7 @@
       };
     });
 
-    // 5. 设置页打开与右划关闭
+    // 6. 设置页打开与右划关闭
     const settingsView = document.getElementById('settings-view');
     const closeSettings = () => { settingsView.classList.remove('open'); settingsView.setAttribute('aria-hidden', 'true'); };
     document.getElementById('open-settings-app').onclick = () => { settingsView.classList.add('open'); settingsView.setAttribute('aria-hidden', 'false'); };
