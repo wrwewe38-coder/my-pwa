@@ -14,7 +14,6 @@
 
   <meta name="theme-color" id="meta-theme-color" content="#F2F2F7" />
 
-  <!-- 首屏加载前立即应用主题，防止深色模式白屏闪烁 -->
   <script>
     (function () {
       const saved = localStorage.getItem('app_theme') || 'system';
@@ -134,14 +133,7 @@
     }
 
     .island-toast.warn .island-dot { background: #FF453A; }
-
-    .island-right {
-      font-size: 13px;
-      font-weight: 700;
-      color: #30D158;
-      white-space: nowrap;
-    }
-
+    .island-right { font-size: 13px; font-weight: 700; color: #30D158; white-space: nowrap; }
     .island-toast.warn .island-right { color: #FF453A; }
 
     /* 顶部毛玻璃导航栏 */
@@ -164,11 +156,7 @@
       padding-right: 12px;
     }
 
-    .ios-header h1 {
-      font-size: 17px;
-      font-weight: 600;
-      letter-spacing: -0.2px;
-    }
+    .ios-header h1 { font-size: 17px; font-weight: 600; letter-spacing: -0.2px; }
 
     .header-left, .header-right {
       position: absolute;
@@ -205,16 +193,7 @@
     }
 
     .header-icon-btn:active { opacity: 0.6; }
-
-    .header-icon-btn svg {
-      width: 22px;
-      height: 22px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.9;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
+    .header-icon-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 
     .accent-pill {
       background: var(--bg-subtle);
@@ -246,12 +225,7 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .section-title {
-      font-size: 13px;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      margin: 0 0 8px 14px;
-    }
+    .section-title { font-size: 13px; color: var(--text-secondary); text-transform: uppercase; margin: 0 0 8px 14px; }
 
     .ios-card {
       background: var(--bg-card);
@@ -283,13 +257,7 @@
       background: var(--separator);
     }
 
-    .ios-cell-value {
-      color: var(--text-secondary);
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .ios-cell-value { color: var(--text-secondary); font-size: 15px; display: flex; align-items: center; gap: 6px; }
 
     .ios-btn {
       width: 100%;
@@ -304,8 +272,13 @@
     }
 
     .ios-btn:active { opacity: 0.78; }
+    .ios-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .ios-btn.secondary { background: var(--bg-subtle); color: var(--text-primary); }
     .ios-btn.green { background: var(--green); color: #FFFFFF; }
+    .ios-btn.orange { background: var(--orange); color: #FFFFFF; }
+
+    .quick-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .quick-grid-3 .ios-btn { padding: 12px 6px; font-size: 14px; }
 
     /* 底部 Tab 栏 */
     .ios-tabbar {
@@ -341,16 +314,7 @@
       cursor: pointer;
     }
 
-    .tab-item svg {
-      width: 24px;
-      height: 24px;
-      fill: none;
-      stroke: currentColor;
-      stroke-width: 1.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
+    .tab-item svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .tab-item.active { color: var(--accent); }
 
     /* ================= 全屏侧滑子页面通用 ================= */
@@ -379,89 +343,19 @@
       padding-right: 16px;
     }
 
-    .segmented {
-      display: flex;
-      background: var(--bg-subtle);
-      border-radius: 9px;
-      padding: 2px;
-      margin-bottom: 10px;
-    }
-
-    .seg-btn {
-      flex: 1;
-      border: none;
-      background: transparent;
-      color: var(--text-primary);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 7px 4px;
-      border-radius: 7px;
-      cursor: pointer;
-    }
-
-    .seg-btn.active {
-      background: var(--bg-card);
-      font-weight: 600;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-    }
+    .segmented { display: flex; background: var(--bg-subtle); border-radius: 9px; padding: 2px; margin-bottom: 10px; }
+    .seg-btn { flex: 1; border: none; background: transparent; color: var(--text-primary); font-size: 13px; font-weight: 500; padding: 7px 4px; border-radius: 7px; cursor: pointer; }
+    .seg-btn.active { background: var(--bg-card); font-weight: 600; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12); }
 
     /* ================= 模块 A：背单词样式 ================= */
-    .book-status-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-      padding: 0 4px;
-    }
-
-    .mode-pills {
-      display: flex;
-      gap: 8px;
-      margin-bottom: 14px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      scrollbar-width: none;
-      padding-bottom: 2px;
-    }
+    .book-status-bar { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-secondary); margin-bottom: 10px; padding: 0 4px; }
+    .mode-pills { display: flex; gap: 8px; margin-bottom: 14px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; padding-bottom: 2px; }
     .mode-pills::-webkit-scrollbar { display: none; }
-
-    .mode-pill {
-      flex: 0 0 auto;
-      border: none;
-      background: var(--bg-card);
-      color: var(--text-secondary);
-      padding: 8px 13px;
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
+    .mode-pill { flex: 0 0 auto; border: none; background: var(--bg-card); color: var(--text-secondary); padding: 8px 13px; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
     .mode-pill.active { background: var(--accent); color: #FFFFFF; }
-
-    .badge-dot {
-      background: var(--red);
-      color: #FFFFFF;
-      font-size: 11px;
-      padding: 1px 6px;
-      border-radius: 10px;
-      font-weight: 700;
-    }
+    .badge-dot { background: var(--red); color: #FFFFFF; font-size: 11px; padding: 1px 6px; border-radius: 10px; font-weight: 700; }
     .mode-pill.active .badge-dot { background: rgba(255, 255, 255, 0.28); }
-
-    .vocab-card {
-      background: var(--bg-card);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 14px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
-    }
-
+    .vocab-card { background: var(--bg-card); border-radius: 16px; padding: 20px; margin-bottom: 14px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04); }
     .card-meta { display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: var(--text-secondary); margin-bottom: 14px; }
     .master-badge { padding: 3px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; background: var(--bg-subtle); color: var(--text-secondary); }
     .master-badge.done { background: var(--green-bg); color: var(--green); }
@@ -503,198 +397,257 @@
     .empty-state { text-align: center; padding: 36px 20px; color: var(--text-secondary); font-size: 14px; line-height: 1.6; }
 
     /* ================= 模块 B：日常记账本样式 ================= */
-    .alert-banner {
-      background: var(--red-bg);
-      border: 1px solid rgba(255, 59, 48, 0.35);
-      color: var(--red);
-      border-radius: 12px;
-      padding: 11px 14px;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 12px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      line-height: 1.4;
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .stat-box {
-      background: var(--bg-card);
-      border-radius: 12px;
-      padding: 12px 10px;
-      text-align: center;
-    }
-
+    .alert-banner { background: var(--red-bg); border: 1px solid rgba(255, 59, 48, 0.35); color: var(--red); border-radius: 12px; padding: 11px 14px; font-size: 13px; font-weight: 600; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; line-height: 1.4; }
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
+    .stat-box { background: var(--bg-card); border-radius: 12px; padding: 12px 10px; text-align: center; }
     .stat-label { font-size: 12px; color: var(--text-secondary); margin-bottom: 4px; }
     .stat-num { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
     .stat-num.over { color: var(--red); }
     .stat-sub { font-size: 11px; color: var(--text-secondary); }
-
-    .progress-track {
-      height: 4px;
-      background: var(--bg-subtle);
-      border-radius: 2px;
-      overflow: hidden;
-      margin-top: 6px;
-    }
+    .progress-track { height: 4px; background: var(--bg-subtle); border-radius: 2px; overflow: hidden; margin-top: 6px; }
     .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.25s ease; }
     .progress-fill.over { background: var(--red); }
-
-    .expense-form-card {
-      background: var(--bg-card);
-      border-radius: 14px;
-      padding: 16px;
-      margin-bottom: 16px;
-    }
-
-    .amount-input-wrap {
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--separator);
-      padding-bottom: 8px;
-      margin-bottom: 14px;
-    }
-
+    .expense-form-card { background: var(--bg-card); border-radius: 14px; padding: 16px; margin-bottom: 16px; }
+    .amount-input-wrap { display: flex; align-items: center; border-bottom: 1px solid var(--separator); padding-bottom: 8px; margin-bottom: 14px; }
     .currency-symbol { font-size: 26px; font-weight: 700; color: var(--text-primary); margin-right: 8px; }
-
-    .amount-input {
-      flex: 1;
-      border: none;
-      background: transparent;
-      font-size: 30px;
-      font-weight: 700;
-      color: var(--text-primary);
-      outline: none;
-      width: 100%;
-      user-select: text;
-      -webkit-user-select: text;
-    }
-
-    .cat-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-
-    .cat-chip {
-      border: 1px solid transparent;
-      background: var(--bg-subtle);
-      color: var(--text-primary);
-      border-radius: 10px;
-      padding: 8px 4px;
-      font-size: 12px;
-      font-weight: 500;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .cat-chip.active {
-      background: rgba(0, 122, 255, 0.14);
-      border-color: var(--accent);
-      color: var(--accent);
-      font-weight: 600;
-    }
-
-    .note-input {
-      width: 100%;
-      padding: 11px 12px;
-      border-radius: 10px;
-      border: 1px solid var(--separator);
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      font-size: 15px;
-      outline: none;
-      margin-bottom: 12px;
-      user-select: text;
-      -webkit-user-select: text;
-    }
+    .amount-input { flex: 1; border: none; background: transparent; font-size: 30px; font-weight: 700; color: var(--text-primary); outline: none; width: 100%; user-select: text; -webkit-user-select: text; }
+    .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 12px; }
+    .cat-chip { border: 1px solid transparent; background: var(--bg-subtle); color: var(--text-primary); border-radius: 10px; padding: 8px 4px; font-size: 12px; font-weight: 500; text-align: center; cursor: pointer; }
+    .cat-chip.active { background: rgba(0, 122, 255, 0.14); border-color: var(--accent); color: var(--accent); font-weight: 600; }
+    .note-input { width: 100%; padding: 11px 12px; border-radius: 10px; border: 1px solid var(--separator); background: var(--bg-primary); color: var(--text-primary); font-size: 15px; outline: none; margin-bottom: 12px; user-select: text; -webkit-user-select: text; }
     .note-input:focus { border-color: var(--accent); }
-
-    .cat-stats-card {
-      background: var(--bg-card);
-      border-radius: 14px;
-      padding: 14px 16px;
-      margin-bottom: 12px;
-    }
-
-    .cat-stats-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .stacked-bar {
-      display: flex;
-      height: 10px;
-      border-radius: 5px;
-      overflow: hidden;
-      background: var(--bg-subtle);
-      gap: 1.5px;
-      margin-bottom: 14px;
-    }
-
+    .cat-stats-card { background: var(--bg-card); border-radius: 14px; padding: 14px 16px; margin-bottom: 12px; }
+    .cat-stats-header { display: flex; justify-content: space-between; align-items: center; font-size: 13px; font-weight: 600; margin-bottom: 10px; }
+    .stacked-bar { display: flex; height: 10px; border-radius: 5px; overflow: hidden; background: var(--bg-subtle); gap: 1.5px; margin-bottom: 14px; }
     .stacked-seg { height: 100%; min-width: 3px; transition: width 0.25s ease; }
-
     .cat-stat-row { margin-bottom: 10px; }
     .cat-stat-row:last-child { margin-bottom: 0; }
-
-    .cat-stat-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 13px;
-      margin-bottom: 5px;
-    }
-
+    .cat-stat-top { display: flex; justify-content: space-between; align-items: center; font-size: 13px; margin-bottom: 5px; }
     .cat-stat-name { display: flex; align-items: center; gap: 6px; font-weight: 500; }
     .cat-dot { width: 8px; height: 8px; border-radius: 4px; flex-shrink: 0; }
     .cat-stat-nums { display: flex; align-items: center; gap: 8px; }
     .cat-stat-pct { font-size: 12px; color: var(--text-secondary); }
     .cat-stat-amt { font-weight: 600; min-width: 62px; text-align: right; }
-
-    .cat-mini-track {
-      height: 4px;
-      border-radius: 2px;
-      background: var(--bg-subtle);
-      overflow: hidden;
-    }
+    .cat-mini-track { height: 4px; border-radius: 2px; background: var(--bg-subtle); overflow: hidden; }
     .cat-mini-fill { height: 100%; border-radius: 2px; }
-
-    .record-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px 14px;
-      background: var(--bg-card);
-      border-radius: 12px;
-      margin-bottom: 8px;
-    }
-
+    .record-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; background: var(--bg-card); border-radius: 12px; margin-bottom: 8px; }
     .record-left { display: flex; flex-direction: column; gap: 3px; }
     .record-title { font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 6px; }
-    .record-cat-tag {
-      font-size: 11px;
-      padding: 2px 6px;
-      border-radius: 6px;
-      background: var(--bg-subtle);
-      color: var(--text-secondary);
-      font-weight: 600;
-    }
+    .record-cat-tag { font-size: 11px; padding: 2px 6px; border-radius: 6px; background: var(--bg-subtle); color: var(--text-secondary); font-weight: 600; }
     .record-time { font-size: 12px; color: var(--text-secondary); }
     .record-right { display: flex; align-items: center; gap: 10px; }
     .record-amount { font-size: 16px; font-weight: 700; color: var(--text-primary); }
     .record-del { border: none; background: none; color: var(--text-secondary); font-size: 18px; padding: 2px 6px; cursor: pointer; }
+
+    /* ================= 模块 C：CS:GO 美食抽箱滑盘样式 ================= */
+    .csgo-stage {
+      position: relative;
+      background: linear-gradient(180deg, #161822 0%, #0D0F16 100%);
+      border-radius: 16px;
+      padding: 16px 0;
+      margin-bottom: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: inset 0 0 28px rgba(0, 0, 0, 0.75), 0 6px 20px rgba(0, 0, 0, 0.16);
+    }
+
+    .csgo-stage::before,
+    .csgo-stage::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 44px;
+      z-index: 5;
+      pointer-events: none;
+    }
+    .csgo-stage::before { left: 0; background: linear-gradient(90deg, #0E1018, transparent); }
+    .csgo-stage::after { right: 0; background: linear-gradient(270deg, #0E1018, transparent); }
+
+    /* 中心金红激光指针 */
+    .csgo-pointer {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 2.5px;
+      transform: translateX(-50%);
+      background: linear-gradient(180deg, #FFD60A, #FF9500, #FFD60A);
+      z-index: 10;
+      box-shadow: 0 0 10px rgba(255, 204, 0, 0.9);
+      pointer-events: none;
+    }
+
+    .csgo-pointer::before,
+    .csgo-pointer::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+    }
+    .csgo-pointer::before { top: 0; border-top: 9px solid #FFD60A; }
+    .csgo-pointer::after { bottom: 0; border-bottom: 9px solid #FFD60A; }
+
+    .csgo-track {
+      display: flex;
+      gap: 8px;
+      will-change: transform;
+    }
+
+    .csgo-card {
+      flex: 0 0 116px;
+      height: 136px;
+      background: #232736;
+      border-radius: 10px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      position: relative;
+    }
+
+    .csgo-card-img {
+      width: 100%;
+      height: 94px;
+      object-fit: cover;
+      display: block;
+      background: #1B1E2B;
+    }
+
+    .csgo-card-name {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #FFFFFF;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      background: #1C1F2B;
+    }
+
+    .csgo-card-bar {
+      height: 4px;
+      width: 100%;
+    }
+
+    /* 中奖结果卡片 */
+    .food-winner-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1.5px solid var(--orange);
+      animation: fadeIn 0.25s ease-out;
+    }
+
+    .food-winner-img {
+      width: 72px;
+      height: 72px;
+      border-radius: 12px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .food-add-card {
+      background: var(--bg-card);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+    }
+
+    .photo-picker-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .photo-preview {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: var(--bg-subtle);
+      display: none;
+      flex-shrink: 0;
+    }
+
+    .photo-upload-label {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: var(--bg-subtle);
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .food-pool-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .food-pool-item {
+      background: var(--bg-card);
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+    }
+
+    .food-pool-thumb {
+      width: 46px;
+      height: 46px;
+      border-radius: 8px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .food-pool-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .food-pool-name {
+      font-size: 14px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .food-pool-prob {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+
+    .food-del-btn {
+      border: none;
+      background: none;
+      color: var(--text-secondary);
+      font-size: 18px;
+      padding: 4px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
@@ -702,9 +655,9 @@
   <div id="island-toast" class="island-toast" role="status" aria-live="polite">
     <div class="island-left">
       <span class="island-dot"></span>
-      <span id="island-msg">已记账</span>
+      <span id="island-msg">提示</span>
     </div>
-    <span class="island-right" id="island-amount">¥0.00</span>
+    <span class="island-right" id="island-amount"></span>
   </div>
 
   <header class="ios-header">
@@ -746,9 +699,10 @@
         </div>
       </div>
 
-      <div class="card-actions">
-        <button class="ios-btn" id="btn-quick-vocab">去背单词</button>
-        <button class="ios-btn green" id="btn-quick-expense">记一笔账</button>
+      <div class="quick-grid-3">
+        <button class="ios-btn" id="btn-quick-vocab">背单词</button>
+        <button class="ios-btn green" id="btn-quick-expense">记一笔</button>
+        <button class="ios-btn orange" id="btn-quick-food">抽美食</button>
       </div>
     </section>
 
@@ -766,6 +720,13 @@
           <span>日常记账本（每日 / 每月预警）</span>
           <span class="ios-cell-value">
             <span id="tools-expense-badge">今日 ¥0</span>
+            <span style="font-size: 18px; opacity: 0.5;">›</span>
+          </span>
+        </div>
+        <div class="ios-cell clickable" id="open-food-app">
+          <span>今天吃什么（CS:GO 抽箱）</span>
+          <span class="ios-cell-value">
+            <span id="tools-food-badge">8 种美食</span>
             <span style="font-size: 18px; opacity: 0.5;">›</span>
           </span>
         </div>
@@ -815,13 +776,17 @@
           <span style="color: var(--red);">清空所有记账消费记录</span>
           <span class="ios-cell-value">重置</span>
         </div>
+        <div class="ios-cell clickable" id="btn-reset-food">
+          <span style="color: var(--red);">恢复默认美食抽箱列表</span>
+          <span class="ios-cell-value">重置</span>
+        </div>
       </div>
 
       <div class="section-title">关于应用</div>
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.4.0</span>
+          <span class="ios-cell-value">1.5.0</span>
         </div>
         <div class="ios-cell">
           <span>预警规则</span>
@@ -918,6 +883,52 @@
     </div>
   </div>
 
+  <!-- ================= 子页面 C：今天吃什么（CS:GO 抽箱） ================= -->
+  <div id="food-view" class="sub-view" aria-hidden="true">
+    <header class="ios-header">
+      <div class="header-left">
+        <button class="nav-text-btn" id="close-food-app">
+          <span style="font-size: 22px; line-height: 1;">‹</span> 返回
+        </button>
+      </div>
+      <h1>今天吃什么</h1>
+      <div class="header-right">
+        <button class="accent-pill" id="btn-food-sound">音效 开</button>
+      </div>
+    </header>
+
+    <div class="sub-content">
+      <!-- CS:GO 抽箱滑盘视窗 -->
+      <div class="csgo-stage" id="csgo-viewport">
+        <div class="csgo-pointer"></div>
+        <div class="csgo-track" id="csgo-track"></div>
+      </div>
+
+      <button class="ios-btn orange" id="btn-spin-food" style="margin-bottom: 14px;">开始抽箱（等概率）</button>
+
+      <!-- 抽中结果展示区 -->
+      <div id="food-winner-box"></div>
+
+      <!-- 添加自定义美食 -->
+      <div class="section-title">添加新美食到滑盘</div>
+      <div class="food-add-card">
+        <input type="text" id="food-name-input" class="note-input" placeholder="输入食物名称（如：螺蛳粉、烤冷面、寿司）" />
+        <div class="photo-picker-row">
+          <img id="food-photo-preview" class="photo-preview" alt="预览" />
+          <label class="photo-upload-label" for="food-photo-input">
+            <span id="food-photo-label-text">📷 从相册选择配图（可选）</span>
+          </label>
+          <input type="file" id="food-photo-input" accept="image/*" style="display:none;" />
+        </div>
+        <button class="ios-btn" id="btn-add-food">添加到滑盘</button>
+      </div>
+
+      <!-- 当前美食奖池列表 -->
+      <div class="section-title" id="food-pool-title">当前奖池</div>
+      <div class="food-pool-grid" id="food-pool-list"></div>
+    </div>
+  </div>
+
   <script>
     /* ==========================================================
        主题管理（浅色 / 深色 / 随系统）
@@ -958,14 +969,14 @@
     function showIslandToast(msg, amountText, isWarn) {
       const el = document.getElementById('island-toast');
       document.getElementById('island-msg').textContent = msg;
-      document.getElementById('island-amount').textContent = amountText;
+      document.getElementById('island-amount').textContent = amountText || '';
       el.classList.toggle('warn', Boolean(isWarn));
       el.classList.add('show');
 
       if (islandTimer) clearTimeout(islandTimer);
       islandTimer = setTimeout(() => {
         el.classList.remove('show');
-      }, 2500);
+      }, 2600);
     }
 
     /* ==========================================================
@@ -1337,22 +1348,15 @@
     }
 
     /* ==========================================================
-       模块 B：日常记账本逻辑（日/月/年统计 + 预警 + 分类占比）
+       模块 B：日常记账本逻辑
     ========================================================== */
     const DAILY_LIMIT = 40;
     const MONTHLY_LIMIT = 1200;
 
     const CAT_COLORS = {
-      '餐饮': '#FF9500',
-      '零食饮品': '#FF2D55',
-      '交通出行': '#007AFF',
-      '日用购物': '#AF52DE',
-      '娱乐休闲': '#5856D6',
-      '学习办公': '#34C759',
-      '医疗健康': '#FF3B30',
-      '其他支出': '#8E8E93'
+      '餐饮': '#FF9500', '零食饮品': '#FF2D55', '交通出行': '#007AFF', '日用购物': '#AF52DE',
+      '娱乐休闲': '#5856D6', '学习办公': '#34C759', '医疗健康': '#FF3B30', '其他支出': '#8E8E93'
     };
-
     const RANGE_LABELS = { day: '今日', month: '本月', year: '本年', all: '全部' };
 
     const expState = {
@@ -1368,12 +1372,7 @@
       const day = String(d.getDate()).padStart(2, '0');
       const hh = String(d.getHours()).padStart(2, '0');
       const mm = String(d.getMinutes()).padStart(2, '0');
-      return {
-        yearStr: `${y}`,
-        monthStr: `${y}-${m}`,
-        dayStr: `${y}-${m}-${day}`,
-        displayTime: `${m}-${day} ${hh}:${mm}`
-      };
+      return { yearStr: `${y}`, monthStr: `${y}-${m}`, dayStr: `${y}-${m}-${day}`, displayTime: `${m}-${day} ${hh}:${mm}` };
     }
 
     function saveExpenses() {
@@ -1395,51 +1394,26 @@
 
     function renderCategoryStats(filtered) {
       const container = document.getElementById('expense-cat-stats');
-      if (filtered.length === 0) {
-        container.innerHTML = '';
-        return;
-      }
-
+      if (filtered.length === 0) { container.innerHTML = ''; return; }
       const totalsByCat = {};
       let grandTotal = 0;
-      filtered.forEach(r => {
-        totalsByCat[r.category] = (totalsByCat[r.category] || 0) + r.amount;
-        grandTotal += r.amount;
-      });
+      filtered.forEach(r => { totalsByCat[r.category] = (totalsByCat[r.category] || 0) + r.amount; grandTotal += r.amount; });
 
       const sorted = Object.entries(totalsByCat)
-        .map(([cat, sum]) => ({
-          cat,
-          sum,
-          pct: grandTotal > 0 ? (sum / grandTotal) * 100 : 0,
-          color: CAT_COLORS[cat] || '#8E8E93'
-        }))
+        .map(([cat, sum]) => ({ cat, sum, pct: grandTotal > 0 ? (sum / grandTotal) * 100 : 0, color: CAT_COLORS[cat] || '#8E8E93' }))
         .sort((a, b) => b.sum - a.sum);
 
       container.innerHTML = `
         <div class="cat-stats-card">
-          <div class="cat-stats-header">
-            <span>${RANGE_LABELS[expState.filterRange]}分类占比</span>
-            <span style="color: var(--text-secondary);">共 ¥${grandTotal.toFixed(2)}</span>
-          </div>
-          <div class="stacked-bar">
-            ${sorted.map(item => `<div class="stacked-seg" style="width:${item.pct.toFixed(2)}%; background:${item.color};"></div>`).join('')}
-          </div>
+          <div class="cat-stats-header"><span>${RANGE_LABELS[expState.filterRange]}分类占比</span><span style="color: var(--text-secondary);">共 ¥${grandTotal.toFixed(2)}</span></div>
+          <div class="stacked-bar">${sorted.map(item => `<div class="stacked-seg" style="width:${item.pct.toFixed(2)}%; background:${item.color};"></div>`).join('')}</div>
           ${sorted.map(item => `
             <div class="cat-stat-row">
               <div class="cat-stat-top">
-                <div class="cat-stat-name">
-                  <span class="cat-dot" style="background:${item.color};"></span>
-                  <span>${item.cat}</span>
-                </div>
-                <div class="cat-stat-nums">
-                  <span class="cat-stat-pct">${item.pct.toFixed(1)}%</span>
-                  <span class="cat-stat-amt">¥${item.sum.toFixed(2)}</span>
-                </div>
+                <div class="cat-stat-name"><span class="cat-dot" style="background:${item.color};"></span><span>${item.cat}</span></div>
+                <div class="cat-stat-nums"><span class="cat-stat-pct">${item.pct.toFixed(1)}%</span><span class="cat-stat-amt">¥${item.sum.toFixed(2)}</span></div>
               </div>
-              <div class="cat-mini-track">
-                <div class="cat-mini-fill" style="width:${item.pct.toFixed(1)}%; background:${item.color};"></div>
-              </div>
+              <div class="cat-mini-track"><div class="cat-mini-fill" style="width:${item.pct.toFixed(1)}%; background:${item.color};"></div></div>
             </div>
           `).join('')}
         </div>
@@ -1461,37 +1435,18 @@
 
       document.getElementById('tools-expense-badge').textContent = `今日 ¥${daySum.toFixed(1)}`;
 
-      const alertsEl = document.getElementById('expense-alerts');
       let alertHtml = '';
-      if (dayOver) {
-        alertHtml += `<div class="alert-banner">⚠️ 今日消费预警：已花费 ¥${daySum.toFixed(2)}，超出每日 ¥${DAILY_LIMIT} 限额（超支 ¥${(daySum - DAILY_LIMIT).toFixed(2)}）</div>`;
-      }
-      if (monthOver) {
-        alertHtml += `<div class="alert-banner">🚨 本月消费预警：已花费 ¥${monthSum.toFixed(2)}，超出每月 ¥${MONTHLY_LIMIT} 限额（超支 ¥${(monthSum - MONTHLY_LIMIT).toFixed(2)}）</div>`;
-      }
-      alertsEl.innerHTML = alertHtml;
+      if (dayOver) alertHtml += `<div class="alert-banner">⚠️ 今日消费预警：已花费 ¥${daySum.toFixed(2)}，超出每日 ¥${DAILY_LIMIT} 限额（超支 ¥${(daySum - DAILY_LIMIT).toFixed(2)}）</div>`;
+      if (monthOver) alertHtml += `<div class="alert-banner">🚨 本月消费预警：已花费 ¥${monthSum.toFixed(2)}，超出每月 ¥${MONTHLY_LIMIT} 限额（超支 ¥${(monthSum - MONTHLY_LIMIT).toFixed(2)}）</div>`;
+      document.getElementById('expense-alerts').innerHTML = alertHtml;
 
       const dayPct = Math.min(100, (daySum / DAILY_LIMIT) * 100);
       const monthPct = Math.min(100, (monthSum / MONTHLY_LIMIT) * 100);
 
       document.getElementById('expense-stats').innerHTML = `
-        <div class="stat-box">
-          <div class="stat-label">今日消费</div>
-          <div class="stat-num ${dayOver ? 'over' : ''}">¥${daySum.toFixed(2)}</div>
-          <div class="stat-sub">限额 ¥${DAILY_LIMIT}</div>
-          <div class="progress-track"><div class="progress-fill ${dayOver ? 'over' : ''}" style="width:${dayPct}%"></div></div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-label">本月消费</div>
-          <div class="stat-num ${monthOver ? 'over' : ''}">¥${monthSum.toFixed(2)}</div>
-          <div class="stat-sub">限额 ¥${MONTHLY_LIMIT}</div>
-          <div class="progress-track"><div class="progress-fill ${monthOver ? 'over' : ''}" style="width:${monthPct}%"></div></div>
-        </div>
-        <div class="stat-box">
-          <div class="stat-label">本年消费</div>
-          <div class="stat-num">¥${yearSum.toFixed(2)}</div>
-          <div class="stat-sub">${new Date().getFullYear()} 年</div>
-        </div>
+        <div class="stat-box"><div class="stat-label">今日消费</div><div class="stat-num ${dayOver ? 'over' : ''}">¥${daySum.toFixed(2)}</div><div class="stat-sub">限额 ¥${DAILY_LIMIT}</div><div class="progress-track"><div class="progress-fill ${dayOver ? 'over' : ''}" style="width:${dayPct}%"></div></div></div>
+        <div class="stat-box"><div class="stat-label">本月消费</div><div class="stat-num ${monthOver ? 'over' : ''}">¥${monthSum.toFixed(2)}</div><div class="stat-sub">限额 ¥${MONTHLY_LIMIT}</div><div class="progress-track"><div class="progress-fill ${monthOver ? 'over' : ''}" style="width:${monthPct}%"></div></div></div>
+        <div class="stat-box"><div class="stat-label">本年消费</div><div class="stat-num">¥${yearSum.toFixed(2)}</div><div class="stat-sub">${new Date().getFullYear()} 年</div></div>
       `;
 
       const now = getLocalDateParts(Date.now());
@@ -1506,10 +1461,7 @@
       renderCategoryStats(filtered);
 
       const listEl = document.getElementById('expense-list');
-      if (filtered.length === 0) {
-        listEl.innerHTML = `<div class="empty-state">当前时间范围内还没有消费记录</div>`;
-        return;
-      }
+      if (filtered.length === 0) { listEl.innerHTML = `<div class="empty-state">当前时间范围内还没有消费记录</div>`; return; }
 
       listEl.innerHTML = filtered.map(r => {
         const p = getLocalDateParts(r.ts);
@@ -1517,17 +1469,10 @@
         return `
           <div class="record-item">
             <div class="record-left">
-              <div class="record-title">
-                <span class="cat-dot" style="background:${color};"></span>
-                <span class="record-cat-tag">${r.category}</span>
-                <span>${r.note || r.category}</span>
-              </div>
+              <div class="record-title"><span class="cat-dot" style="background:${color};"></span><span class="record-cat-tag">${r.category}</span><span>${r.note || r.category}</span></div>
               <div class="record-time">${p.displayTime}</div>
             </div>
-            <div class="record-right">
-              <span class="record-amount">-¥${r.amount.toFixed(2)}</span>
-              <button class="record-del" data-id="${r.id}" aria-label="删除">×</button>
-            </div>
+            <div class="record-right"><span class="record-amount">-¥${r.amount.toFixed(2)}</span><button class="record-del" data-id="${r.id}" aria-label="删除">×</button></div>
           </div>
         `;
       }).join('');
@@ -1554,36 +1499,19 @@
       const amountInput = document.getElementById('exp-amount');
       const noteInput = document.getElementById('exp-note');
       const val = parseFloat(amountInput.value);
-
-      if (isNaN(val) || val <= 0) {
-        alert('请输入有效的消费金额');
-        return;
-      }
+      if (isNaN(val) || val <= 0) { alert('请输入有效的消费金额'); return; }
 
       const amount = Math.round(val * 100) / 100;
       const note = noteInput.value.trim();
-
-      expState.records.unshift({
-        id: Date.now(),
-        ts: Date.now(),
-        amount,
-        category: expState.selectedCat,
-        note
-      });
-
+      expState.records.unshift({ id: Date.now(), ts: Date.now(), amount, category: expState.selectedCat, note });
       amountInput.value = '';
       noteInput.value = '';
       saveExpenses();
 
-      // 触发顶部仿灵动岛胶囊提示
       const { daySum, monthSum } = calcExpenseTotals();
       const isOver = daySum > DAILY_LIMIT || monthSum > MONTHLY_LIMIT;
       const label = note || expState.selectedCat;
-      if (isOver) {
-        showIslandToast(`超支预警 · 今日 ¥${daySum.toFixed(1)}`, `-¥${amount.toFixed(2)}`, true);
-      } else {
-        showIslandToast(`${label} · 今日 ¥${daySum.toFixed(1)}`, `-¥${amount.toFixed(2)}`, false);
-      }
+      showIslandToast(isOver ? `超支预警 · 今日 ¥${daySum.toFixed(1)}` : `${label} · 今日 ¥${daySum.toFixed(1)}`, `-¥${amount.toFixed(2)}`, isOver);
     });
 
     document.getElementById('exp-filter').addEventListener('click', (e) => {
@@ -1593,6 +1521,300 @@
       btn.classList.add('active');
       expState.filterRange = btn.dataset.range;
       renderExpenseDashboard();
+    });
+
+    /* ==========================================================
+       模块 C：CS:GO 美食抽箱滑盘逻辑
+    ========================================================== */
+    const CSGO_COLORS = ['#4B69FF', '#8847FF', '#D32CE6', '#EB4B4B', '#E4AE39', '#34C759', '#00B4D8', '#FF7A00'];
+
+    // 生成离线可用的高清矢量美食配图（SVG Data URI）
+    function makeFoodArt(bg1, bg2, emoji, subLabel) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="240" height="200" viewBox="0 0 240 200">
+        <defs>
+          <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="${bg1}"/>
+            <stop offset="100%" stop-color="${bg2}"/>
+          </linearGradient>
+        </defs>
+        <rect width="240" height="200" fill="url(#g)"/>
+        <circle cx="195" cy="35" r="48" fill="rgba(255,255,255,0.12)"/>
+        <circle cx="40" cy="175" r="56" fill="rgba(0,0,0,0.12)"/>
+        <circle cx="120" cy="96" r="56" fill="rgba(255,255,255,0.22)"/>
+        <text x="120" y="114" font-size="68" text-anchor="middle">${emoji}</text>
+        <text x="120" y="180" font-family="-apple-system,sans-serif" font-size="16" font-weight="700" fill="rgba(255,255,255,0.88)" text-anchor="middle">${subLabel}</text>
+      </svg>`;
+      return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+
+    function getDefaultFoods() {
+      return [
+        { id: 'f_1', name: '杂酱面', color: '#FF9500', img: makeFoodArt('#FF9A44', '#FC6076', '🍜', '经典酱香') },
+        { id: 'f_2', name: '抄手', color: '#EB4B4B', img: makeFoodArt('#F857A6', '#FF5858', '🥟', '红油鲜香') },
+        { id: 'f_3', name: '黄焖鸡', color: '#E4AE39', img: makeFoodArt('#F7971E', '#B76E00', '🍲', '浓郁下饭') },
+        { id: 'f_4', name: '干锅', color: '#D32CE6', img: makeFoodArt('#D31027', '#EA384D', '🥘', '麻辣焦香') },
+        { id: 'f_5', name: '麻辣烫', color: '#8847FF', img: makeFoodArt('#FF512F', '#DD2476', '🍢', '自选百搭') },
+        { id: 'f_6', name: '烤肉拌饭', color: '#4B69FF', img: makeFoodArt('#C79081', '#DFA579', '🍚', '肉香满足') },
+        { id: 'f_7', name: '兰州拉面', color: '#34C759', img: makeFoodArt('#11998E', '#38EF7D', '🥢', '清汤劲道') },
+        { id: 'f_8', name: '汉堡薯条', color: '#00B4D8', img: makeFoodArt('#F2994A', '#F2C94C', '🍔', '快乐碳水') }
+      ];
+    }
+
+    const foodState = {
+      items: JSON.parse(localStorage.getItem('food_items_v1') || 'null') || getDefaultFoods(),
+      soundOn: localStorage.getItem('food_sound') !== 'off',
+      isSpinning: false,
+      pendingImg: null,
+      rafId: null
+    };
+
+    let audioCtx = null;
+    function playTickSound() {
+      if (!foodState.soundOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(760, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(280, audioCtx.currentTime + 0.028);
+        gain.gain.setValueAtTime(0.14, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.03);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.032);
+      } catch {}
+    }
+
+    function playWinSound() {
+      if (!foodState.soundOn) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        [523.25, 659.25, 783.99, 1046.5].forEach((freq, i) => {
+          const osc = audioCtx.createOscillator();
+          const gain = audioCtx.createGain();
+          osc.type = 'sine';
+          const t = audioCtx.currentTime + i * 0.07;
+          osc.frequency.setValueAtTime(freq, t);
+          gain.gain.setValueAtTime(0.12, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+          osc.connect(gain);
+          gain.connect(audioCtx.destination);
+          osc.start(t);
+          osc.stop(t + 0.26);
+        });
+      } catch {}
+    }
+
+    function saveFoods() {
+      localStorage.setItem('food_items_v1', JSON.stringify(foodState.items));
+      renderFoodUI();
+    }
+
+    function buildIdleTrack() {
+      const track = document.getElementById('csgo-track');
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0px)';
+      const list = foodState.items;
+      const previewCards = [];
+      for (let i = 0; i < 12; i++) {
+        previewCards.push(list[i % list.length]);
+      }
+      track.innerHTML = previewCards.map(item => `
+        <div class="csgo-card">
+          <img class="csgo-card-img" src="${item.img}" alt="${item.name}" />
+          <div class="csgo-card-name">${item.name}</div>
+          <div class="csgo-card-bar" style="background:${item.color};"></div>
+        </div>
+      `).join('');
+    }
+
+    function renderFoodUI() {
+      const count = foodState.items.length;
+      const prob = count > 0 ? (100 / count).toFixed(1) : '0';
+      document.getElementById('tools-food-badge').textContent = `${count} 种美食`;
+      document.getElementById('food-pool-title').textContent = `当前奖池 · 共 ${count} 项（每项概率 ${prob}%）`;
+
+      const listEl = document.getElementById('food-pool-list');
+      listEl.innerHTML = foodState.items.map(item => `
+        <div class="food-pool-item">
+          <img class="food-pool-thumb" src="${item.img}" alt="${item.name}" />
+          <div class="food-pool-info">
+            <div class="food-pool-name">${item.name}</div>
+            <div class="food-pool-prob">概率 ${prob}%</div>
+          </div>
+          <button class="food-del-btn" data-id="${item.id}" aria-label="删除">×</button>
+        </div>
+      `).join('');
+
+      listEl.querySelectorAll('.food-del-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (foodState.isSpinning) return;
+          if (foodState.items.length <= 2) {
+            alert('奖池里至少需要保留 2 种食物才能抽奖');
+            return;
+          }
+          if (confirm('从滑盘中移除这项食物？')) {
+            foodState.items = foodState.items.filter(f => f.id !== btn.dataset.id);
+            saveFoods();
+            buildIdleTrack();
+          }
+        });
+      });
+
+      if (!foodState.isSpinning) buildIdleTrack();
+    }
+
+    // 执行 CS:GO 抽箱动画
+    document.getElementById('btn-spin-food').addEventListener('click', () => {
+      if (foodState.isSpinning || foodState.items.length < 2) return;
+      foodState.isSpinning = true;
+
+      const spinBtn = document.getElementById('btn-spin-food');
+      spinBtn.disabled = true;
+      spinBtn.textContent = '抽箱中...';
+      document.getElementById('food-winner-box').innerHTML = '';
+
+      // 严格等概率随机抽取胜出食物
+      const items = foodState.items;
+      const winner = items[Math.floor(Math.random() * items.length)];
+      const TOTAL_SLOTS = 62;
+      const WIN_SLOT = 50;
+      const CARD_WIDTH = 116;
+      const CARD_GAP = 8;
+      const STRIDE = CARD_WIDTH + CARD_GAP; // 124px
+
+      const strip = [];
+      for (let i = 0; i < TOTAL_SLOTS; i++) {
+        if (i === WIN_SLOT) {
+          strip.push(winner);
+        } else {
+          let pick = items[Math.floor(Math.random() * items.length)];
+          if (i > 0 && items.length > 1 && pick.id === strip[i - 1].id) {
+            pick = items[(items.indexOf(pick) + 1) % items.length];
+          }
+          strip.push(pick);
+        }
+      }
+
+      const viewport = document.getElementById('csgo-viewport');
+      const track = document.getElementById('csgo-track');
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0px)';
+      track.innerHTML = strip.map(item => `
+        <div class="csgo-card">
+          <img class="csgo-card-img" src="${item.img}" alt="${item.name}" />
+          <div class="csgo-card-name">${item.name}</div>
+          <div class="csgo-card-bar" style="background:${item.color};"></div>
+        </div>
+      `).join('');
+
+      // 强制浏览器重排，确保动画从 0px 开始
+      void track.offsetWidth;
+
+      const viewportCenter = viewport.clientWidth / 2;
+      // 在胜出卡片内部加入轻微随机偏移，还原 CS:GO 压线悬念感
+      const suspenseJitter = (Math.random() - 0.5) * 76;
+      const targetX = -(WIN_SLOT * STRIDE + CARD_WIDTH / 2 + suspenseJitter - viewportCenter);
+
+      track.style.transition = 'transform 4.8s cubic-bezier(0.08, 0.88, 0.12, 1)';
+      track.style.transform = `translateX(${targetX}px)`;
+
+      // 实时追踪经过中心线的卡片以播放咔哒音效
+      let lastSlot = -1;
+      function watchTick() {
+        if (!foodState.isSpinning) return;
+        const matrix = new DOMMatrix(getComputedStyle(track).transform);
+        const currentOffset = -matrix.m41 + viewportCenter;
+        const slotIdx = Math.floor(currentOffset / STRIDE);
+        if (slotIdx !== lastSlot && slotIdx >= 0) {
+          lastSlot = slotIdx;
+          playTickSound();
+        }
+        foodState.rafId = requestAnimationFrame(watchTick);
+      }
+      foodState.rafId = requestAnimationFrame(watchTick);
+
+      setTimeout(() => {
+        foodState.isSpinning = false;
+        if (foodState.rafId) cancelAnimationFrame(foodState.rafId);
+        spinBtn.disabled = false;
+        spinBtn.textContent = '再来一发（等概率）';
+        playWinSound();
+
+        document.getElementById('food-winner-box').innerHTML = `
+          <div class="food-winner-card">
+            <img class="food-winner-img" src="${winner.img}" alt="${winner.name}" />
+            <div>
+              <div style="font-size:12px; color:var(--orange); font-weight:700; margin-bottom:4px;">🎉 抽箱结果已出炉</div>
+              <div style="font-size:22px; font-weight:700;">今天就吃：${winner.name}</div>
+            </div>
+          </div>
+        `;
+        showIslandToast('美食抽箱结果', winner.name, false);
+      }, 4900);
+    });
+
+    // 相册选图并压缩成轻量 Base64（避免塞爆 localStorage）
+    document.getElementById('food-photo-input').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (ev) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const size = 240;
+          canvas.width = size;
+          canvas.height = size;
+          const ctx = canvas.getContext('2d');
+          const minSide = Math.min(img.width, img.height);
+          const sx = (img.width - minSide) / 2;
+          const sy = (img.height - minSide) / 2;
+          ctx.drawImage(img, sx, sy, minSide, minSide, 0, 0, size, size);
+          foodState.pendingImg = canvas.toDataURL('image/jpeg', 0.72);
+
+          const preview = document.getElementById('food-photo-preview');
+          preview.src = foodState.pendingImg;
+          preview.style.display = 'block';
+          document.getElementById('food-photo-label-text').textContent = '✅ 已选配图（点击更换）';
+        };
+        img.src = ev.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // 添加新美食到奖池
+    document.getElementById('btn-add-food').addEventListener('click', () => {
+      if (foodState.isSpinning) return;
+      const nameInput = document.getElementById('food-name-input');
+      const name = nameInput.value.trim();
+      if (!name) { alert('请先输入食物名称'); return; }
+
+      const color = CSGO_COLORS[foodState.items.length % CSGO_COLORS.length];
+      const img = foodState.pendingImg || makeFoodArt(color, '#1C1C1E', '🍽️', name.slice(0, 4));
+
+      foodState.items.push({ id: 'f_' + Date.now(), name, color, img });
+      nameInput.value = '';
+      foodState.pendingImg = null;
+      document.getElementById('food-photo-input').value = '';
+      document.getElementById('food-photo-preview').style.display = 'none';
+      document.getElementById('food-photo-label-text').textContent = '📷 从相册选择配图（可选）';
+
+      saveFoods();
+      showIslandToast('已添加到美食滑盘', name, false);
+    });
+
+    // 音效开关
+    const soundBtn = document.getElementById('btn-food-sound');
+    function updateSoundLabel() { soundBtn.textContent = foodState.soundOn ? '音效 开' : '音效 关'; }
+    updateSoundLabel();
+    soundBtn.addEventListener('click', () => {
+      foodState.soundOn = !foodState.soundOn;
+      localStorage.setItem('food_sound', foodState.soundOn ? 'on' : 'off');
+      updateSoundLabel();
     });
 
     /* ==========================================================
@@ -1622,16 +1844,9 @@
         const dy = touch.clientY - startY;
 
         if (!isSwiping) {
-          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
-            isTracking = false;
-            return;
-          }
-          if (dx > 10 && dx > Math.abs(dy)) {
-            isSwiping = true;
-            viewEl.style.transition = 'none';
-          }
+          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) { isTracking = false; return; }
+          if (dx > 10 && dx > Math.abs(dy)) { isSwiping = true; viewEl.style.transition = 'none'; }
         }
-
         if (isSwiping && dx > 0) {
           currentDx = dx;
           viewEl.style.transform = `translateX(${dx}px)`;
@@ -1642,11 +1857,9 @@
         if (!isTracking) return;
         isTracking = false;
         if (!isSwiping) return;
-
         const elapsed = Math.max(1, Date.now() - startTime);
         const velocity = currentDx / elapsed;
         const shouldClose = currentDx > window.innerWidth * 0.25 || (currentDx > 40 && velocity > 0.35);
-
         viewEl.style.transition = '';
         viewEl.style.transform = '';
         if (shouldClose) onClose();
@@ -1675,6 +1888,7 @@
       });
     });
 
+    // 设置页
     const settingsView = document.getElementById('settings-view');
     function openSettings() { settingsView.classList.add('open'); settingsView.setAttribute('aria-hidden', 'false'); }
     function closeSettings() { settingsView.classList.remove('open'); settingsView.setAttribute('aria-hidden', 'true'); }
@@ -1682,6 +1896,7 @@
     document.getElementById('close-settings-app').addEventListener('click', closeSettings);
     bindEdgeSwipeBack(settingsView, closeSettings);
 
+    // 背单词页
     const vocabView = document.getElementById('vocab-view');
     function openVocab() { vocabView.classList.add('open'); vocabView.setAttribute('aria-hidden', 'false'); renderStage(); }
     function closeVocab() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); vocabView.classList.remove('open'); vocabView.setAttribute('aria-hidden', 'true'); }
@@ -1690,6 +1905,7 @@
     document.getElementById('close-vocab-app').addEventListener('click', closeVocab);
     bindEdgeSwipeBack(vocabView, closeVocab);
 
+    // 记账本页
     const expenseView = document.getElementById('expense-view');
     function openExpense() { expenseView.classList.add('open'); expenseView.setAttribute('aria-hidden', 'false'); renderExpenseDashboard(); }
     function closeExpense() { expenseView.classList.remove('open'); expenseView.setAttribute('aria-hidden', 'true'); }
@@ -1700,6 +1916,16 @@
     document.getElementById('close-expense-app').addEventListener('click', closeExpense);
     bindEdgeSwipeBack(expenseView, closeExpense);
 
+    // 美食抽箱页
+    const foodView = document.getElementById('food-view');
+    function openFood() { foodView.classList.add('open'); foodView.setAttribute('aria-hidden', 'false'); renderFoodUI(); }
+    function closeFood() { foodView.classList.remove('open'); foodView.setAttribute('aria-hidden', 'true'); }
+    document.getElementById('open-food-app').addEventListener('click', openFood);
+    document.getElementById('btn-quick-food').addEventListener('click', openFood);
+    document.getElementById('close-food-app').addEventListener('click', closeFood);
+    bindEdgeSwipeBack(foodView, closeFood);
+
+    // 背单词控件
     const accentBtn = document.getElementById('btn-accent');
     function updateAccentLabel() { accentBtn.textContent = state.accent === 'en-US' ? '美音 US' : '英音 UK'; }
     updateAccentLabel();
@@ -1727,6 +1953,7 @@
       renderStage();
     });
 
+    // 数据重置
     document.getElementById('btn-reset-vocab').addEventListener('click', () => {
       if (confirm('确定要清空所有掌握记录和错题本吗？')) {
         state.mastered.clear(); state.mistakes = {}; state.bookIndices = { cet4: 0, cet6: 0, ielts: 0 };
@@ -1741,11 +1968,19 @@
       }
     });
 
+    document.getElementById('btn-reset-food').addEventListener('click', () => {
+      if (confirm('确定恢复为默认的 8 种美食列表吗？')) {
+        foodState.items = getDefaultFoods();
+        saveFoods(); alert('已恢复默认美食列表');
+      }
+    });
+
     const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     document.getElementById('pwa-status').textContent = isStandalone ? '已开启 (原生全屏)' : '浏览器内运行';
 
     updateBadges();
     renderExpenseDashboard();
+    renderFoodUI();
 
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
