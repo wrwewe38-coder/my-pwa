@@ -294,6 +294,8 @@
       transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1);
       display: flex;
       flex-direction: column;
+      box-shadow: -8px 0 24px rgba(0, 0, 0, 0.16);
+      will-change: transform;
     }
 
     .sub-view.open { transform: translateX(0); }
@@ -733,11 +735,15 @@
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.3.2</span>
+          <span class="ios-cell-value">1.3.3</span>
         </div>
         <div class="ios-cell">
           <span>预警规则</span>
           <span class="ios-cell-value">日 ¥40 / 月 ¥1200</span>
+        </div>
+        <div class="ios-cell">
+          <span>返回手势</span>
+          <span class="ios-cell-value">左侧边缘右划</span>
         </div>
       </div>
     </div>
@@ -1442,6 +1448,76 @@
     });
 
     /* ==========================================================
+       iOS 左侧边缘右划返回手势（跟手拖动 + 速度/距离判定）
+    ========================================================== */
+    function bindEdgeSwipeBack(viewEl, onClose) {
+      let startX = 0;
+      let startY = 0;
+      let startTime = 0;
+      let isTracking = false;
+      let isSwiping = false;
+      let currentDx = 0;
+
+      viewEl.addEventListener('touchstart', (e) => {
+        if (!viewEl.classList.contains('open') || e.touches.length !== 1) return;
+        const touch = e.touches[0];
+        // 仅当手指落在屏幕左侧 45px 边缘区域内时激活
+        if (touch.clientX <= 45) {
+          startX = touch.clientX;
+          startY = touch.clientY;
+          startTime = Date.now();
+          isTracking = true;
+          isSwiping = false;
+          currentDx = 0;
+        }
+      }, { passive: true });
+
+      viewEl.addEventListener('touchmove', (e) => {
+        if (!isTracking) return;
+        const touch = e.touches[0];
+        const dx = touch.clientX - startX;
+        const dy = touch.clientY - startY;
+
+        if (!isSwiping) {
+          // 如果纵向滑动更明显，则放弃返回手势，保持正常上下滚动
+          if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
+            isTracking = false;
+            return;
+          }
+          if (dx > 10 && dx > Math.abs(dy)) {
+            isSwiping = true;
+            viewEl.style.transition = 'none';
+          }
+        }
+
+        if (isSwiping && dx > 0) {
+          currentDx = dx;
+          viewEl.style.transform = `translateX(${dx}px)`;
+        }
+      }, { passive: true });
+
+      const finishSwipe = () => {
+        if (!isTracking) return;
+        isTracking = false;
+        if (!isSwiping) return;
+
+        const elapsed = Math.max(1, Date.now() - startTime);
+        const velocity = currentDx / elapsed; // px/ms
+        const shouldClose = currentDx > window.innerWidth * 0.25 || (currentDx > 40 && velocity > 0.35);
+
+        viewEl.style.transition = '';
+        viewEl.style.transform = '';
+
+        if (shouldClose) {
+          onClose();
+        }
+      };
+
+      viewEl.addEventListener('touchend', finishSwipe, { passive: true });
+      viewEl.addEventListener('touchcancel', finishSwipe, { passive: true });
+    }
+
+    /* ==========================================================
        全局导航与事件绑定
     ========================================================== */
     const tabs = document.querySelectorAll('.tab-item');
@@ -1456,41 +1532,37 @@
         tab.classList.add('active');
         document.getElementById(tab.dataset.target).classList.add('active');
         titleEl.textContent = tab.dataset.title;
-        // 仅在首页显示右上角设置按钮
         homeSettingsWrap.style.display = tab.dataset.target === 'tab-home' ? 'flex' : 'none';
       });
     });
 
     // 打开/关闭 设置
     const settingsView = document.getElementById('settings-view');
-    document.getElementById('open-settings-app').addEventListener('click', () => {
-      settingsView.classList.add('open');
-      settingsView.setAttribute('aria-hidden', 'false');
-    });
-    document.getElementById('close-settings-app').addEventListener('click', () => {
-      settingsView.classList.remove('open');
-      settingsView.setAttribute('aria-hidden', 'true');
-    });
+    function openSettings() { settingsView.classList.add('open'); settingsView.setAttribute('aria-hidden', 'false'); }
+    function closeSettings() { settingsView.classList.remove('open'); settingsView.setAttribute('aria-hidden', 'true'); }
+    document.getElementById('open-settings-app').addEventListener('click', openSettings);
+    document.getElementById('close-settings-app').addEventListener('click', closeSettings);
+    bindEdgeSwipeBack(settingsView, closeSettings);
 
     // 打开/关闭 背单词
     const vocabView = document.getElementById('vocab-view');
     function openVocab() { vocabView.classList.add('open'); vocabView.setAttribute('aria-hidden', 'false'); renderStage(); }
     function closeVocab() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); vocabView.classList.remove('open'); vocabView.setAttribute('aria-hidden', 'true'); }
-
     document.getElementById('open-vocab-app').addEventListener('click', openVocab);
     document.getElementById('btn-quick-vocab').addEventListener('click', openVocab);
     document.getElementById('close-vocab-app').addEventListener('click', closeVocab);
+    bindEdgeSwipeBack(vocabView, closeVocab);
 
     // 打开/关闭 记账本
     const expenseView = document.getElementById('expense-view');
     function openExpense() { expenseView.classList.add('open'); expenseView.setAttribute('aria-hidden', 'false'); renderExpenseDashboard(); }
     function closeExpense() { expenseView.classList.remove('open'); expenseView.setAttribute('aria-hidden', 'true'); }
-
     document.getElementById('open-expense-app').addEventListener('click', openExpense);
     document.getElementById('btn-quick-expense').addEventListener('click', openExpense);
     document.getElementById('home-open-expense').addEventListener('click', openExpense);
     document.getElementById('home-open-expense-2').addEventListener('click', openExpense);
     document.getElementById('close-expense-app').addEventListener('click', closeExpense);
+    bindEdgeSwipeBack(expenseView, closeExpense);
 
     const accentBtn = document.getElementById('btn-accent');
     function updateAccentLabel() { accentBtn.textContent = state.accent === 'en-US' ? '美音 US' : '英音 UK'; }
