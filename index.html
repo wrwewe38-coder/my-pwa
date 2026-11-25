@@ -12,8 +12,19 @@
   <meta name="apple-mobile-web-app-title" content="我的应用" />
   <link rel="apple-touch-icon" href="./icon-180.png" />
 
-  <meta name="theme-color" content="#F2F2F7" media="(prefers-color-scheme: light)" />
-  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <meta name="theme-color" id="meta-theme-color" content="#F2F2F7" />
+
+  <!-- 首屏加载前立即应用主题，防止深色模式白屏闪烁 -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('app_theme') || 'system';
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const effective = saved === 'system' ? (prefersDark ? 'dark' : 'light') : saved;
+      document.documentElement.dataset.theme = effective;
+      const meta = document.getElementById('meta-theme-color');
+      if (meta) meta.content = effective === 'dark' ? '#000000' : '#F2F2F7';
+    })();
+  </script>
 
   <style>
     :root {
@@ -37,23 +48,21 @@
       --tabbar-height: 54px;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg-primary: #000000;
-        --bg-card: #1C1C1E;
-        --bg-subtle: rgba(118, 118, 128, 0.24);
-        --bg-bar: rgba(28, 28, 30, 0.85);
-        --text-primary: #FFFFFF;
-        --text-secondary: #8E8E93;
-        --accent: #0A84FF;
-        --green: #30D158;
-        --green-bg: rgba(48, 209, 88, 0.18);
-        --red: #FF453A;
-        --red-bg: rgba(255, 69, 58, 0.18);
-        --orange: #FF9F0A;
-        --orange-bg: rgba(255, 159, 10, 0.18);
-        --separator: rgba(84, 84, 88, 0.45);
-      }
+    :root[data-theme="dark"] {
+      --bg-primary: #000000;
+      --bg-card: #1C1C1E;
+      --bg-subtle: rgba(118, 118, 128, 0.24);
+      --bg-bar: rgba(28, 28, 30, 0.85);
+      --text-primary: #FFFFFF;
+      --text-secondary: #8E8E93;
+      --accent: #0A84FF;
+      --green: #30D158;
+      --green-bg: rgba(48, 209, 88, 0.18);
+      --red: #FF453A;
+      --red-bg: rgba(255, 69, 58, 0.18);
+      --orange: #FF9F0A;
+      --orange-bg: rgba(255, 159, 10, 0.18);
+      --separator: rgba(84, 84, 88, 0.45);
     }
 
     * {
@@ -73,7 +82,67 @@
       -webkit-font-smoothing: antialiased;
       user-select: none;
       -webkit-user-select: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
+
+    /* ================= 应用内仿灵动岛胶囊提示 ================= */
+    .island-toast {
+      position: fixed;
+      top: calc(var(--safe-top) + 8px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-16px) scale(0.75);
+      opacity: 0;
+      pointer-events: none;
+      z-index: 999;
+      background: #000000;
+      color: #FFFFFF;
+      border: 0.5px solid rgba(255, 255, 255, 0.16);
+      border-radius: 26px;
+      padding: 10px 16px;
+      min-width: 210px;
+      max-width: calc(100vw - 32px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      transition: transform 0.36s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.24s ease;
+    }
+
+    .island-toast.show {
+      transform: translateX(-50%) translateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .island-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .island-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 4px;
+      background: #30D158;
+      flex-shrink: 0;
+    }
+
+    .island-toast.warn .island-dot { background: #FF453A; }
+
+    .island-right {
+      font-size: 13px;
+      font-weight: 700;
+      color: #30D158;
+      white-space: nowrap;
+    }
+
+    .island-toast.warn .island-right { color: #FF453A; }
 
     /* 顶部毛玻璃导航栏 */
     .ios-header {
@@ -549,7 +618,6 @@
     }
     .note-input:focus { border-color: var(--accent); }
 
-    /* 分类统计占比卡片 */
     .cat-stats-card {
       background: var(--bg-card);
       border-radius: 14px;
@@ -603,7 +671,6 @@
     }
     .cat-mini-fill { height: 100%; border-radius: 2px; }
 
-    /* 消费流水项 */
     .record-item {
       display: flex;
       justify-content: space-between;
@@ -631,6 +698,15 @@
   </style>
 </head>
 <body>
+  <!-- 应用内仿灵动岛胶囊提示 -->
+  <div id="island-toast" class="island-toast" role="status" aria-live="polite">
+    <div class="island-left">
+      <span class="island-dot"></span>
+      <span id="island-msg">已记账</span>
+    </div>
+    <span class="island-right" id="island-amount">¥0.00</span>
+  </div>
+
   <header class="ios-header">
     <h1 id="page-title">首页</h1>
     <div class="header-right" id="home-settings-wrap">
@@ -720,6 +796,15 @@
     </header>
 
     <div class="sub-content">
+      <div class="section-title">外观主题</div>
+      <div class="ios-card" style="padding: 12px 14px;">
+        <div class="segmented" id="theme-switcher" style="margin-bottom: 0;">
+          <button class="seg-btn" data-theme-opt="light">浅色</button>
+          <button class="seg-btn" data-theme-opt="dark">深色</button>
+          <button class="seg-btn active" data-theme-opt="system">随系统</button>
+        </div>
+      </div>
+
       <div class="section-title">数据管理</div>
       <div class="ios-card">
         <div class="ios-cell clickable" id="btn-reset-vocab">
@@ -731,11 +816,12 @@
           <span class="ios-cell-value">重置</span>
         </div>
       </div>
+
       <div class="section-title">关于应用</div>
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.3.3</span>
+          <span class="ios-cell-value">1.4.0</span>
         </div>
         <div class="ios-cell">
           <span>预警规则</span>
@@ -833,6 +919,55 @@
   </div>
 
   <script>
+    /* ==========================================================
+       主题管理（浅色 / 深色 / 随系统）
+    ========================================================== */
+    const darkMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    let currentThemeMode = localStorage.getItem('app_theme') || 'system';
+
+    function applyTheme(mode) {
+      currentThemeMode = mode;
+      localStorage.setItem('app_theme', mode);
+      const effective = mode === 'system' ? (darkMediaQuery.matches ? 'dark' : 'light') : mode;
+      document.documentElement.dataset.theme = effective;
+
+      const meta = document.getElementById('meta-theme-color');
+      if (meta) meta.content = effective === 'dark' ? '#000000' : '#F2F2F7';
+
+      document.querySelectorAll('#theme-switcher .seg-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.themeOpt === mode);
+      });
+    }
+
+    darkMediaQuery.addEventListener('change', () => {
+      if (currentThemeMode === 'system') applyTheme('system');
+    });
+
+    document.getElementById('theme-switcher').addEventListener('click', (e) => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      applyTheme(btn.dataset.themeOpt);
+    });
+
+    applyTheme(currentThemeMode);
+
+    /* ==========================================================
+       应用内仿灵动岛胶囊提示
+    ========================================================== */
+    let islandTimer = null;
+    function showIslandToast(msg, amountText, isWarn) {
+      const el = document.getElementById('island-toast');
+      document.getElementById('island-msg').textContent = msg;
+      document.getElementById('island-amount').textContent = amountText;
+      el.classList.toggle('warn', Boolean(isWarn));
+      el.classList.add('show');
+
+      if (islandTimer) clearTimeout(islandTimer);
+      islandTimer = setTimeout(() => {
+        el.classList.remove('show');
+      }, 2500);
+    }
+
     /* ==========================================================
        模块 A：背单词逻辑
     ========================================================== */
@@ -1425,17 +1560,30 @@
         return;
       }
 
+      const amount = Math.round(val * 100) / 100;
+      const note = noteInput.value.trim();
+
       expState.records.unshift({
         id: Date.now(),
         ts: Date.now(),
-        amount: Math.round(val * 100) / 100,
+        amount,
         category: expState.selectedCat,
-        note: noteInput.value.trim()
+        note
       });
 
       amountInput.value = '';
       noteInput.value = '';
       saveExpenses();
+
+      // 触发顶部仿灵动岛胶囊提示
+      const { daySum, monthSum } = calcExpenseTotals();
+      const isOver = daySum > DAILY_LIMIT || monthSum > MONTHLY_LIMIT;
+      const label = note || expState.selectedCat;
+      if (isOver) {
+        showIslandToast(`超支预警 · 今日 ¥${daySum.toFixed(1)}`, `-¥${amount.toFixed(2)}`, true);
+      } else {
+        showIslandToast(`${label} · 今日 ¥${daySum.toFixed(1)}`, `-¥${amount.toFixed(2)}`, false);
+      }
     });
 
     document.getElementById('exp-filter').addEventListener('click', (e) => {
@@ -1448,20 +1596,15 @@
     });
 
     /* ==========================================================
-       iOS 左侧边缘右划返回手势（跟手拖动 + 速度/距离判定）
+       iOS 左侧边缘右划返回手势
     ========================================================== */
     function bindEdgeSwipeBack(viewEl, onClose) {
-      let startX = 0;
-      let startY = 0;
-      let startTime = 0;
-      let isTracking = false;
-      let isSwiping = false;
-      let currentDx = 0;
+      let startX = 0, startY = 0, startTime = 0;
+      let isTracking = false, isSwiping = false, currentDx = 0;
 
       viewEl.addEventListener('touchstart', (e) => {
         if (!viewEl.classList.contains('open') || e.touches.length !== 1) return;
         const touch = e.touches[0];
-        // 仅当手指落在屏幕左侧 45px 边缘区域内时激活
         if (touch.clientX <= 45) {
           startX = touch.clientX;
           startY = touch.clientY;
@@ -1479,7 +1622,6 @@
         const dy = touch.clientY - startY;
 
         if (!isSwiping) {
-          // 如果纵向滑动更明显，则放弃返回手势，保持正常上下滚动
           if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 8) {
             isTracking = false;
             return;
@@ -1502,15 +1644,12 @@
         if (!isSwiping) return;
 
         const elapsed = Math.max(1, Date.now() - startTime);
-        const velocity = currentDx / elapsed; // px/ms
+        const velocity = currentDx / elapsed;
         const shouldClose = currentDx > window.innerWidth * 0.25 || (currentDx > 40 && velocity > 0.35);
 
         viewEl.style.transition = '';
         viewEl.style.transform = '';
-
-        if (shouldClose) {
-          onClose();
-        }
+        if (shouldClose) onClose();
       };
 
       viewEl.addEventListener('touchend', finishSwipe, { passive: true });
@@ -1536,7 +1675,6 @@
       });
     });
 
-    // 打开/关闭 设置
     const settingsView = document.getElementById('settings-view');
     function openSettings() { settingsView.classList.add('open'); settingsView.setAttribute('aria-hidden', 'false'); }
     function closeSettings() { settingsView.classList.remove('open'); settingsView.setAttribute('aria-hidden', 'true'); }
@@ -1544,7 +1682,6 @@
     document.getElementById('close-settings-app').addEventListener('click', closeSettings);
     bindEdgeSwipeBack(settingsView, closeSettings);
 
-    // 打开/关闭 背单词
     const vocabView = document.getElementById('vocab-view');
     function openVocab() { vocabView.classList.add('open'); vocabView.setAttribute('aria-hidden', 'false'); renderStage(); }
     function closeVocab() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); vocabView.classList.remove('open'); vocabView.setAttribute('aria-hidden', 'true'); }
@@ -1553,7 +1690,6 @@
     document.getElementById('close-vocab-app').addEventListener('click', closeVocab);
     bindEdgeSwipeBack(vocabView, closeVocab);
 
-    // 打开/关闭 记账本
     const expenseView = document.getElementById('expense-view');
     function openExpense() { expenseView.classList.add('open'); expenseView.setAttribute('aria-hidden', 'false'); renderExpenseDashboard(); }
     function closeExpense() { expenseView.classList.remove('open'); expenseView.setAttribute('aria-hidden', 'true'); }
