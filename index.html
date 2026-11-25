@@ -124,6 +124,29 @@
       cursor: pointer;
     }
 
+    .header-icon-btn {
+      background: none;
+      border: none;
+      color: var(--accent);
+      padding: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .header-icon-btn:active { opacity: 0.6; }
+
+    .header-icon-btn svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
     .accent-pill {
       background: var(--bg-subtle);
       color: var(--accent);
@@ -608,6 +631,11 @@
 <body>
   <header class="ios-header">
     <h1 id="page-title">首页</h1>
+    <div class="header-right" id="home-settings-wrap">
+      <button class="header-icon-btn" id="open-settings-app" aria-label="设置">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+    </div>
   </header>
 
   <main class="app-content">
@@ -665,8 +693,31 @@
         </div>
       </div>
     </section>
+  </main>
 
-    <section id="tab-settings" class="tab-page">
+  <nav class="ios-tabbar" aria-label="主导航">
+    <button class="tab-item active" data-target="tab-home" data-title="首页">
+      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
+      <span>首页</span>
+    </button>
+    <button class="tab-item" data-target="tab-tools" data-title="工具">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      <span>工具</span>
+    </button>
+  </nav>
+
+  <!-- ================= 子页面：设置 ================= -->
+  <div id="settings-view" class="sub-view" aria-hidden="true">
+    <header class="ios-header">
+      <div class="header-left">
+        <button class="nav-text-btn" id="close-settings-app">
+          <span style="font-size: 22px; line-height: 1;">‹</span> 返回
+        </button>
+      </div>
+      <h1>设置</h1>
+    </header>
+
+    <div class="sub-content">
       <div class="section-title">数据管理</div>
       <div class="ios-card">
         <div class="ios-cell clickable" id="btn-reset-vocab">
@@ -682,30 +733,15 @@
       <div class="ios-card">
         <div class="ios-cell">
           <span>版本号</span>
-          <span class="ios-cell-value">1.3.1</span>
+          <span class="ios-cell-value">1.3.2</span>
         </div>
         <div class="ios-cell">
           <span>预警规则</span>
           <span class="ios-cell-value">日 ¥40 / 月 ¥1200</span>
         </div>
       </div>
-    </section>
-  </main>
-
-  <nav class="ios-tabbar" aria-label="主导航">
-    <button class="tab-item active" data-target="tab-home" data-title="首页">
-      <svg viewBox="0 0 24 24"><path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1v-9.5z"/></svg>
-      <span>首页</span>
-    </button>
-    <button class="tab-item" data-target="tab-tools" data-title="工具">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-      <span>工具</span>
-    </button>
-    <button class="tab-item" data-target="tab-settings" data-title="设置">
-      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h.01a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h.01a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v.01a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-      <span>设置</span>
-    </button>
-  </nav>
+    </div>
+  </div>
 
   <!-- ================= 子页面 A：背单词 ================= -->
   <div id="vocab-view" class="sub-view" aria-hidden="true">
@@ -754,13 +790,9 @@
     </header>
 
     <div class="sub-content">
-      <!-- 超支预警区 -->
       <div id="expense-alerts"></div>
-
-      <!-- 日 / 月 / 年 消费统计 -->
       <div class="stats-grid" id="expense-stats"></div>
 
-      <!-- 记一笔表单 -->
       <div class="expense-form-card">
         <div class="amount-input-wrap">
           <span class="currency-symbol">¥</span>
@@ -782,7 +814,6 @@
         <button class="ios-btn" id="btn-add-expense">记一笔</button>
       </div>
 
-      <!-- 时间范围筛选 -->
       <div class="segmented" id="exp-filter">
         <button class="seg-btn active" data-range="day">今日</button>
         <button class="seg-btn" data-range="month">本月</button>
@@ -790,10 +821,7 @@
         <button class="seg-btn" data-range="all">全部</button>
       </div>
 
-      <!-- 新增：按分类统计占比 -->
       <div id="expense-cat-stats"></div>
-
-      <!-- 消费流水列表 -->
       <div id="expense-list"></div>
     </div>
   </div>
@@ -1282,7 +1310,6 @@
       const dayOver = daySum > DAILY_LIMIT;
       const monthOver = monthSum > MONTHLY_LIMIT;
 
-      // 1. 同步首页与工具页
       const homeDayEl = document.getElementById('home-today-spend');
       homeDayEl.textContent = `¥${daySum.toFixed(2)}${dayOver ? ' (超支)' : ''}`;
       homeDayEl.style.color = dayOver ? 'var(--red)' : 'var(--text-secondary)';
@@ -1293,7 +1320,6 @@
 
       document.getElementById('tools-expense-badge').textContent = `今日 ¥${daySum.toFixed(1)}`;
 
-      // 2. 渲染预警横幅
       const alertsEl = document.getElementById('expense-alerts');
       let alertHtml = '';
       if (dayOver) {
@@ -1304,7 +1330,6 @@
       }
       alertsEl.innerHTML = alertHtml;
 
-      // 3. 渲染 日/月/年 统计卡片
       const dayPct = Math.min(100, (daySum / DAILY_LIMIT) * 100);
       const monthPct = Math.min(100, (monthSum / MONTHLY_LIMIT) * 100);
 
@@ -1328,7 +1353,6 @@
         </div>
       `;
 
-      // 4. 按时间范围筛选
       const now = getLocalDateParts(Date.now());
       const filtered = expState.records.filter(r => {
         const p = getLocalDateParts(r.ts);
@@ -1338,10 +1362,8 @@
         return true;
       });
 
-      // 5. 渲染分类统计占比
       renderCategoryStats(filtered);
 
-      // 6. 渲染流水明细
       const listEl = document.getElementById('expense-list');
       if (filtered.length === 0) {
         listEl.innerHTML = `<div class="empty-state">当前时间范围内还没有消费记录</div>`;
@@ -1425,6 +1447,7 @@
     const tabs = document.querySelectorAll('.tab-item');
     const pages = document.querySelectorAll('.tab-page');
     const titleEl = document.getElementById('page-title');
+    const homeSettingsWrap = document.getElementById('home-settings-wrap');
 
     tabs.forEach(tab => {
       tab.addEventListener('click', () => {
@@ -1433,9 +1456,23 @@
         tab.classList.add('active');
         document.getElementById(tab.dataset.target).classList.add('active');
         titleEl.textContent = tab.dataset.title;
+        // 仅在首页显示右上角设置按钮
+        homeSettingsWrap.style.display = tab.dataset.target === 'tab-home' ? 'flex' : 'none';
       });
     });
 
+    // 打开/关闭 设置
+    const settingsView = document.getElementById('settings-view');
+    document.getElementById('open-settings-app').addEventListener('click', () => {
+      settingsView.classList.add('open');
+      settingsView.setAttribute('aria-hidden', 'false');
+    });
+    document.getElementById('close-settings-app').addEventListener('click', () => {
+      settingsView.classList.remove('open');
+      settingsView.setAttribute('aria-hidden', 'true');
+    });
+
+    // 打开/关闭 背单词
     const vocabView = document.getElementById('vocab-view');
     function openVocab() { vocabView.classList.add('open'); vocabView.setAttribute('aria-hidden', 'false'); renderStage(); }
     function closeVocab() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); vocabView.classList.remove('open'); vocabView.setAttribute('aria-hidden', 'true'); }
@@ -1444,6 +1481,7 @@
     document.getElementById('btn-quick-vocab').addEventListener('click', openVocab);
     document.getElementById('close-vocab-app').addEventListener('click', closeVocab);
 
+    // 打开/关闭 记账本
     const expenseView = document.getElementById('expense-view');
     function openExpense() { expenseView.classList.add('open'); expenseView.setAttribute('aria-hidden', 'false'); renderExpenseDashboard(); }
     function closeExpense() { expenseView.classList.remove('open'); expenseView.setAttribute('aria-hidden', 'true'); }
