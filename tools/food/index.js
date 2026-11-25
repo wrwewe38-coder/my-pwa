@@ -137,7 +137,7 @@ function close() {
 
 export default {
   id: 'food',
-  name: '今天吃什么（CS:GO 抽箱）',
+  name: '今天吃什么',
   shortName: '抽美食',
   btnClass: 'orange',
   resetLabel: '恢复默认美食抽箱列表',
